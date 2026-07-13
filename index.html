@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="ko" class="h-full">
+<html lang="ko" class="h-full scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KimDongHee.json | 백엔드 엔지니어 포트폴리오</title>
+    <title>KimDongHee.json | AI Backend Engineer</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            bg: '#111113',          // 정갈하고 따뜻한 미니멀 차콜 (메인 배경)
-                            panel: '#19191d',       // 차분한 다크 브라운-슬레이트 (카드 배경)
-                            panelLight: '#242429',  // 조금 더 밝은 톤 (호버 및 강조 레이어)
-                            accent: '#e07a5f',      // 편안하고 고급스러운 가을 벽돌색 (메인 포인트)
-                            accentLight: '#f2a18a', // 화사한 테라코타 라이트
-                            secondary: '#f4f1de',   // 일러스트 바탕이 되는 자연스러운 샌드 베이지
-                            cream: '#fbf8f3',       // 소프트 크림 화이트 (텍스트 기본/강조)
+                            bg: 'var(--brand-bg)',          // 다이나믹 배경색
+                            panel: 'var(--brand-panel)',    // 다이나믹 카드 배경
+                            panelLight: 'var(--brand-panel-light)', // 다이나믹 강조 카드
+                            accent: 'var(--brand-accent)',  // 브랜드 포인트색
+                            accentLight: 'var(--brand-accent-light)', // 포인트색 라이트버전
+                            secondary: 'var(--brand-secondary)', // 보조 색상
+                            cream: 'var(--brand-cream)',    // 기본/텍스트 색상
                             terminalGreen: '#8ac926', 
                             terminalYellow: '#ffca3a',
                             terminalRed: '#ff595e'
@@ -37,12 +38,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        :root {
+            --brand-bg: #111113;
+            --brand-panel: #19191d;
+            --brand-panel-light: #242429;
+            --brand-accent: #e07a5f;
+            --brand-accent-light: #f2a18a;
+            --brand-secondary: #f4f1de;
+            --brand-cream: #fbf8f3;
+            --text-main: #fbf8f3;
+            --text-muted: #a8a29e;
+            --text-sub: #d6d3d1;
+        }
+
+        [data-theme="light"] {
+            --brand-bg: #f5f3ef; /* 아늑한 크림 베이지 */
+            --brand-panel: #ffffff; 
+            --brand-panel-light: #eae6df; 
+            --brand-accent: #c2593f; 
+            --brand-accent-light: #e07a5f;
+            --brand-secondary: #5c5844; 
+            --brand-cream: #1e1b18; 
+            --text-main: #1e1b18;
+            --text-muted: #57524a;
+            --text-sub: #3a3733;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111113;
-            color: #fbf8f3;
+            background-color: var(--brand-bg);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        /* Custom typing cursor blink */
+
+        /* 라이트 모드일 때 기존 다크용 텍스트 클래스 오버라이드 */
+        [data-theme="light"] .text-stone-200 { color: var(--text-main) !important; }
+        [data-theme="light"] .text-stone-300 { color: var(--text-sub) !important; }
+        [data-theme="light"] .text-stone-400 { color: var(--text-muted) !important; }
+        [data-theme="light"] .text-stone-500 { color: #706a60 !important; }
+        [data-theme="light"] .bg-brand-panel\/30 { background-color: rgba(255, 255, 255, 0.4) !important; }
+        [data-theme="light"] .bg-brand-panel\/40 { background-color: rgba(255, 255, 255, 0.45) !important; }
+        [data-theme="light"] .bg-brand-panel\/50 { background-color: rgba(255, 255, 255, 0.55) !important; }
+        [data-theme="light"] .bg-brand-panel\/60 { background-color: rgba(255, 255, 255, 0.65) !important; }
+        [data-theme="light"] .bg-brand-panel\/95 { background-color: rgba(255, 255, 255, 0.95) !important; }
+        [data-theme="light"] .bg-brand-bg\/90 { background-color: rgba(245, 243, 239, 0.9) !important; }
+        [data-theme="light"] .bg-brand-bg { background-color: #f5f3ef !important; }
+        [data-theme="light"] .border-brand-panel\/40 { border-color: rgba(92, 88, 68, 0.15) !important; }
+        [data-theme="light"] .border-brand-panel\/80 { border-color: rgba(92, 88, 68, 0.25) !important; }
+        [data-theme="light"] .border-brand-panel { border-color: rgba(92, 88, 68, 0.2) !important; }
+        [data-theme="light"] .bg-gradient-to-b { background-image: linear-gradient(to bottom, #f5f3ef, #eae6df) !important; }
+
+        /* 커스텀 마우스 스타일 */
+        @media (hover: hover) {
+            body, a, button, [onclick], .nav-link, .cursor-pointer {
+                cursor: none !important;
+            }
+        }
+        #custom-cursor-dot {
+            transition: transform 0.08s ease-out;
+        }
+        #custom-cursor-ring {
+            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s, border-color 0.2s;
+        }
+
         .cursor-blink {
             animation: blink 1s infinite;
         }
@@ -50,29 +108,53 @@
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
-        /* Smooth tab contents fading and scaling transitions */
+        
         .tab-content {
             transition: opacity 250ms ease-out, transform 250ms ease-out;
         }
-        /* Sleek custom scrollbar integrated with our cozy warm colors */
+
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #111113;
+            background: var(--brand-bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: #242429;
+            background: var(--brand-panel-light);
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #e07a5f;
+            background: var(--brand-accent);
+        }
+
+        /* 깃허브 잔디/방명록 스크롤 제어 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 이스터에그 찾기 애니메이션 */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .egg-active {
+            animation: bounce-slow 2s infinite ease-in-out;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden text-stone-200">
 
-    <!-- 네비게이션 바 (고정형) -->
+    <!-- 백그라운드 은은한 파티클 캔버스 -->
+    <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- 스크롤 진행률 상단 바 -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-brand-accent to-brand-accentLight z-[99] transition-all duration-100" style="width: 0%"></div>
+
+    <!-- 커스텀 마우스 커서 -->
+    <div id="custom-cursor-dot" class="fixed top-0 left-0 w-2 h-2 bg-brand-accent rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"></div>
+    <div id="custom-cursor-ring" class="fixed top-0 left-0 w-8 h-8 border border-brand-accent/50 rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 hidden md:block"></div>
+
+    <!-- 네비게이션 바 -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-brand-bg/90 backdrop-blur-md border-b border-brand-panel/80 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -84,19 +166,37 @@
                         <span class="text-brand-accent">/&gt;</span>
                     </a>
                 </div>
-                <!-- 데스크탑 메뉴 (클릭 시 하단 스크롤이 아닌 해시 기반 탭 전환) -->
+                <!-- 데스크탑 메뉴 -->
                 <div class="hidden md:flex items-center space-x-2 font-mono text-sm">
-                    <a href="#home" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Home</a>
-                    <a href="#about" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">About</a>
-                    <a href="#charms" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Charms</a>
-                    <a href="#hobbies" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Off-duty</a>
-                    <a href="#tech" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Tech</a>
-                    <a href="#collaboration" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Collaboration</a>
-                    <a href="#contact" class="nav-link px-4 py-1.5 bg-brand-accent/20 hover:bg-brand-accent/30 text-brand-cream border border-brand-accent/40 rounded-lg transition-all">Contact</a>
+                    <a href="#home" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all" data-i18n="nav-home">Home</a>
+                    <a href="#about" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all" data-i18n="nav-about">About</a>
+                    <a href="#charms" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all" data-i18n="nav-charms">Charms</a>
+                    <a href="#hobbies" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all" data-i18n="nav-offduty">Off-duty</a>
+                    <a href="#tech" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all" data-i18n="nav-tech">Tech</a>
+                    <a href="#collaboration" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all" data-i18n="nav-collaboration">Collaboration</a>
+                    <a href="#contact" class="nav-link px-4 py-1.5 bg-brand-accent/20 hover:bg-brand-accent/30 text-brand-cream border border-brand-accent/40 rounded-lg transition-all mr-2" data-i18n="nav-contact">Contact</a>
+                    
+                    <!-- 국어 / 영어 토글 버튼 -->
+                    <button id="lang-toggle-btn" class="px-2 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight hover:bg-brand-panelLight transition-all font-mono text-xs border border-brand-panel/80 mr-1" aria-label="언어 설정">
+                        EN
+                    </button>
+
+                    <!-- 테마 전환 버튼 (데스크탑) -->
+                    <button id="theme-toggle-btn" class="p-2 rounded-lg text-stone-300 hover:text-brand-accentLight hover:bg-brand-panelLight transition-all focus:outline-none" aria-label="테마 전환">
+                        <i class="fa-solid fa-moon text-base dark-icon"></i>
+                        <i class="fa-solid fa-sun text-base light-icon hidden"></i>
+                    </button>
                 </div>
-                <!-- 모바일 토글 버튼 -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-stone-400 hover:text-brand-cream focus:outline-none" aria-label="메뉴 열기">
+                <!-- 모바일 제어 영역 -->
+                <div class="md:hidden flex items-center gap-2">
+                    <button id="lang-toggle-btn-mobile" class="px-2 py-1 text-xs rounded-md text-stone-300 hover:text-brand-accentLight font-mono border border-brand-panel/80">
+                        EN
+                    </button>
+                    <button id="theme-toggle-btn-mobile" class="p-2 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all focus:outline-none" aria-label="테마 전환">
+                        <i class="fa-solid fa-moon text-base dark-icon-mobile"></i>
+                        <i class="fa-solid fa-sun text-base light-icon-mobile hidden"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-stone-400 hover:text-brand-cream focus:outline-none p-1.5" aria-label="메뉴 열기">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -104,29 +204,27 @@
         </div>
         <!-- 모바일 드롭다운 메뉴 -->
         <div id="mobile-menu" class="hidden md:hidden bg-brand-panel/95 border-b border-brand-accent/20 px-4 pt-2 pb-4 space-y-1 font-mono text-center">
-            <a href="#home" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Home</a>
-            <a href="#about" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">About</a>
-            <a href="#charms" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Charms</a>
-            <a href="#hobbies" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Off-duty</a>
-            <a href="#tech" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Tech</a>
-            <a href="#collaboration" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Collaboration</a>
-            <a href="#contact" class="nav-link block py-2 text-brand-cream bg-brand-accent/20 border border-brand-accent/30 rounded-lg">Contact</a>
+            <a href="#home" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors" data-i18n="nav-home">Home</a>
+            <a href="#about" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors" data-i18n="nav-about">About</a>
+            <a href="#charms" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors" data-i18n="nav-charms">Charms</a>
+            <a href="#hobbies" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors" data-i18n="nav-offduty">Off-duty</a>
+            <a href="#tech" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors" data-i18n="nav-tech">Tech</a>
+            <a href="#collaboration" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors" data-i18n="nav-collaboration">Collaboration</a>
+            <a href="#contact" class="nav-link block py-2 text-brand-cream bg-brand-accent/20 border border-brand-accent/30 rounded-lg" data-i18n="nav-contact">Contact</a>
         </div>
     </nav>
 
-    <!-- 메인 컨텐츠 영역 (탭 전용 래퍼) -->
-    <main class="flex-grow pt-16 flex flex-col">
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="flex-grow pt-16 flex flex-col z-10 relative">
 
         <!-- 1. [Home] 히어로 탭 -->
         <div id="tab-home" class="tab-content w-full flex-grow flex items-center justify-center py-12 px-4 relative overflow-hidden bg-gradient-to-b from-brand-bg to-brand-panel">
-            <!-- 배경 오렌지/테라코타 엠비언트 라이트 효과 -->
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent/10 rounded-full filter blur-[120px] pointer-events-none"></div>
             <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-secondary/5 rounded-full filter blur-[120px] pointer-events-none"></div>
 
             <div class="max-w-6xl w-full z-10 my-auto">
                 <!-- 터미널 윈도우 -->
                 <div class="w-full bg-brand-panel/95 rounded-2xl border border-brand-accent/25 shadow-[0_0_40px_rgba(224,122,95,0.08)] overflow-hidden backdrop-blur-md">
-                    <!-- 터미널 타이틀바 -->
                     <div class="flex items-center justify-between px-4 py-3 bg-brand-bg/95 border-b border-brand-panel">
                         <div class="flex items-center space-x-2">
                             <span class="w-3 h-3 rounded-full bg-brand-terminalRed inline-block"></span>
@@ -134,15 +232,16 @@
                             <span class="w-3 h-3 rounded-full bg-brand-terminalGreen inline-block"></span>
                         </div>
                         <span class="font-mono text-xs text-stone-400">kim-dong-hee ~ zsh ~ profile.json</span>
-                        <span class="w-10"></span>
+                        <!-- 이스터에그 수집 진척도 인디케이터 -->
+                        <div class="text-xs font-mono text-stone-500 flex items-center gap-1">
+                            <i class="fa-solid fa-ghost text-brand-accent/60"></i>
+                            <span id="easter-counter">0/3</span>
+                        </div>
                     </div>
                     
-                    <!-- 터미널 본문 -->
                     <div class="p-6 sm:p-8 md:p-10 font-mono text-stone-300">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                            
-                            <!-- 좌측: JSON 데이터 및 실시간 타이핑 -->
-                            <div class="lg:col-span-7 space-y-6">
+                            <div class="lg:col-span-12 space-y-6">
                                 <div>
                                     <span class="text-brand-accent">guest@ssafy-gumi-4:~$</span>
                                     <span class="text-brand-cream ml-2">cat profile.json</span>
@@ -151,10 +250,10 @@
                                 <!-- JSON 시각화 -->
                                 <div class="text-sm sm:text-base text-stone-400 pl-4 border-l-2 border-brand-accent/40 space-y-1">
                                     <div>{</div>
-                                    <div class="pl-4">"<span class="text-brand-accentLight">name</span>": "<span class="text-brand-cream">김동희</span>",</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">name</span>": "<span class="text-brand-cream" data-i18n="profile-name">김동희</span>",</div>
                                     <div class="pl-4">"<span class="text-brand-accentLight">age</span>": <span class="text-amber-400">27</span>,</div>
-                                    <div class="pl-4">"<span class="text-brand-accentLight">location</span>": "<span class="text-brand-cream">SSAFY 구미 캠퍼스 (4반)</span>",</div>
-                                    <div class="pl-4">"<span class="text-brand-accentLight">role</span>": "<span class="text-brand-secondary">AI Backend Engineer Candidate</span>",</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">location</span>": "<span class="text-brand-cream" data-i18n="profile-location">SSAFY 구미 캠퍼스 (4반)</span>",</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">role</span>": "<span class="text-brand-secondary" data-i18n="profile-role">AI Backend Engineer Candidate</span>",</div>
                                     <div class="pl-4">"<span class="text-brand-accentLight">mbti</span>": "<span class="text-brand-accent">INTJ</span>"</div>
                                     <div>}</div>
                                 </div>
@@ -170,31 +269,35 @@
 
                                 <!-- 타겟 오디언스 라벨 -->
                                 <div class="pt-6 border-t border-brand-panel/80 flex flex-wrap gap-2 items-center text-xs text-stone-400">
-                                    <span class="text-stone-500">Target Audience:</span>
+                                    <span class="text-stone-500" data-i18n="target-audience">Target Audience:</span>
                                     <span class="bg-brand-accent/10 px-2 py-1 rounded border border-brand-accent/20 text-brand-accentLight">#SSAFY_프로젝트_동기</span>
                                     <span class="bg-brand-secondary/5 px-2 py-1 rounded border border-brand-secondary/20 text-brand-secondary">#Java_알고리즘_스터디_동기</span>
+                                    
+                                    <!-- 첫 번째 이스터에그 (홈 화면에 숨겨진 비밀 커널 유도 기둥) -->
+                                    <button onclick="revealEasterEgg(1)" id="easter-1" class="ml-auto text-stone-600 hover:text-brand-accentLight transition-all p-1 text-xs egg-active" title="??">
+                                        <i class="fa-solid fa-terminal"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 다음 단계 가이드 CTA -->
                 <div class="text-center mt-12">
                     <a href="#about" class="inline-flex items-center gap-2 bg-brand-panel px-6 py-3 rounded-full border border-brand-accent/30 hover:border-brand-accent text-sm font-mono text-brand-accentLight hover:text-brand-cream transition-all shadow-md">
-                        <span>상세 소개 보기 (About)</span>
+                        <span data-i18n="btn-go-about">상세 소개 보기 (About)</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- 2. [About] 소개 탭 -->
+        <!-- 2. [About] 소개 및 인터랙티브 타임라인 탭 -->
         <div id="tab-about" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
-            <div class="max-w-4xl w-full my-auto">
-                <div class="flex items-center gap-3 mb-10">
+            <div class="max-w-4xl w-full my-auto space-y-12">
+                <div class="flex items-center gap-3">
                     <div class="h-1 w-12 bg-brand-accent rounded"></div>
-                    <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight">About Me : 김동희</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight" data-i18n="about-title">About Me : 김동희</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
@@ -206,7 +309,7 @@
                                     <i class="fa-solid fa-user-tie"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-bold text-brand-cream">김동희</h3>
+                                    <h3 class="text-xl font-bold text-brand-cream" data-i18n="meta-name">김동희</h3>
                                     <p class="text-sm text-brand-accentLight font-mono">AI Backend Developer</p>
                                 </div>
                             </div>
@@ -214,15 +317,15 @@
                             <div class="space-y-3 font-mono text-sm border-t border-b border-brand-accent/10 py-4 text-stone-300">
                                 <div class="flex items-center justify-between">
                                     <span class="text-stone-500"><i class="fa-solid fa-cake-candles mr-2"></i>Age</span>
-                                    <span class="text-brand-cream">27세</span>
+                                    <span class="text-brand-cream" data-i18n="meta-age">27세</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-stone-500"><i class="fa-solid fa-graduation-cap mr-2"></i>Location</span>
-                                    <span class="text-brand-cream">SSAFY 구미 4반</span>
+                                    <span class="text-brand-cream" data-i18n="meta-location">SSAFY 구미 4반</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-stone-500"><i class="fa-solid fa-brain mr-2"></i>MBTI</span>
-                                    <span class="text-brand-accentLight font-bold">INTJ (용의주도 전략가)</span>
+                                    <span class="text-brand-accentLight font-bold">INTJ</span>
                                 </div>
                             </div>
                         </div>
@@ -242,29 +345,54 @@
                     <div class="md:col-span-7 bg-brand-panel/60 border border-brand-accent/10 rounded-2xl p-6 sm:p-8 flex flex-col justify-center hover:border-brand-accent/20 transition-all relative shadow-lg">
                         <div class="absolute top-4 right-6 text-brand-accent/10 text-6xl font-serif select-none pointer-events-none">“</div>
                         <div class="space-y-6 text-stone-300">
-                            <p class="text-lg leading-relaxed font-light">
-                                "이번 1학기 동안 <span class="text-brand-accentLight font-semibold">서로 자극을 주며 함께 성장하실 분들</span>을 찾고 있습니다."
+                            <p class="text-lg leading-relaxed font-light" data-i18n="about-intro">
+                                "이번 1학기 동안 서로 자극을 주며 함께 성장하실 분들을 찾고 있습니다."
                             </p>
-                            <p class="leading-relaxed">
+                            <p class="leading-relaxed text-sm sm:text-base" data-i18n="about-desc">
                                 에러 앞에서 밤새는 것을 두려워하지 않는 집요함으로 든든한 백엔드를 책임지겠습니다! 
                                 기능이 정상적으로 작동하는 것은 당연하며, 효율적인 아키텍처와 최적화된 데이터 흐름을 통해 실제 유저에게 완성도 높은 가치를 안전하게 서비스하는 것을 최종 지향점으로 삼고 있습니다.
                             </p>
-                            <div class="pt-4 border-t border-brand-panel/80 flex items-center gap-4 text-xs font-mono text-stone-400">
-                                <div>
-                                    <span class="text-brand-accent font-bold">100%</span>
-                                    <span class="block text-[10px] text-stone-500">책임 완수율</span>
-                                </div>
-                                <div class="w-px h-6 bg-brand-panel"></div>
-                                <div>
-                                    <span class="text-brand-accentLight font-bold">INTJ</span>
-                                    <span class="block text-[10px] text-stone-500">전략적 계획가</span>
-                                </div>
-                                <div class="w-px h-6 bg-brand-panel"></div>
-                                <div>
-                                    <span class="text-brand-secondary font-bold">Deep Dive</span>
-                                    <span class="block text-[10px] text-stone-500">자기주도 학습</span>
-                                </div>
+                            
+                            <!-- 두 번째 이스터에그 (인사말 하단에 조용히 자리 잡은 숨겨진 벌레 아이콘) -->
+                            <div class="text-right">
+                                <button onclick="revealEasterEgg(2)" id="easter-2" class="text-stone-600 hover:text-brand-accentLight transition-all p-1 text-sm egg-active">
+                                    <i class="fa-solid fa-bug"></i>
+                                </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 인터랙티브 학습/커리어 타임라인 -->
+                <div class="bg-brand-panel/40 border border-brand-accent/10 rounded-2xl p-6 md:p-8 hover:border-brand-accent/20 transition-all">
+                    <h3 class="text-xl font-bold font-mono text-brand-cream mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-route text-brand-accent"></i>
+                        <span data-i18n="timeline-title">학습 및 성장 타임라인</span>
+                    </h3>
+                    <div class="relative border-l-2 border-brand-accent/25 ml-4 md:ml-6 space-y-8">
+                        <!-- 타임라인 아이템 1 -->
+                        <div class="relative pl-6 md:pl-8 group">
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-panel border-2 border-brand-accent group-hover:bg-brand-accentLight transition-colors"></div>
+                            <span class="text-xs font-mono text-brand-accentLight block" data-i18n="timeline-date1">2019 - 2025</span>
+                            <h4 class="text-base font-bold text-brand-cream" data-i18n="timeline-head1">컴퓨터공학 기초 수립 (전공 교육 수료)</h4>
+                            <p class="text-sm text-stone-400 mt-1" data-i18n="timeline-desc1">자료구조, 알고리즘, 시스템 아키텍처의 원리를 이해하고 핵심 프로그래밍 능력을 함양했습니다.</p>
+                        </div>
+                        <!-- 타임라인 아이템 2 -->
+                        <div class="relative pl-6 md:pl-8 group">
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-panel border-2 border-brand-accent group-hover:bg-brand-accentLight transition-colors"></div>
+                            <span class="text-xs font-mono text-brand-accentLight block" data-i18n="timeline-date2">2025 - 2026</span>
+                            <h4 class="text-base font-bold text-brand-cream" data-i18n="timeline-head2">AI 파이프라인 및 Flutter 경험</h4>
+                            <p class="text-sm text-stone-400 mt-1" data-i18n="timeline-desc2">Python 기반 AI 모델 서빙 프로토타입 설계 및 Dart/Flutter 크로스플랫폼 통합 앱 환경을 주도적으로 테스트했습니다.</p>
+                        </div>
+                        <!-- 타임라인 아이템 3 -->
+                        <div class="relative pl-6 md:pl-8 group">
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-panel border-2 border-brand-accent group-hover:bg-brand-accentLight transition-colors"></div>
+                            <span class="text-xs font-mono text-brand-accentLight block" data-i18n="timeline-date3">2026 - Present</span>
+                            <h4 class="text-base font-bold text-brand-cream flex items-center gap-2">
+                                <span data-i18n="timeline-head3">SSAFY 구미 4반 Deep Diving</span>
+                                <span class="bg-brand-accent/20 text-brand-accent text-[10px] px-1.5 py-0.5 rounded font-mono">Running</span>
+                            </h4>
+                            <p class="text-sm text-stone-400 mt-1" data-i18n="timeline-desc3">Spring Boot 프레임워크와 대용량 트래픽에 최적화된 Redis 하이퍼 캐싱 전략 연구, 협업 프로젝트 완수를 지향하고 있습니다.</p>
                         </div>
                     </div>
                 </div>
@@ -278,8 +406,8 @@
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-panel border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
                         <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span> Core Values
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight">협업에 기여할 세 가지 무기</h2>
-                    <p class="text-sm sm:text-base text-stone-400 max-w-2xl mx-auto">개발팀을 단단하고 견고하게 만드는 백엔드 개발자로서의 핵심 역량을 소개합니다.</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight" data-i18n="charms-main">협업에 기여할 세 가지 무기</h2>
+                    <p class="text-sm sm:text-base text-stone-400 max-w-2xl mx-auto" data-i18n="charms-sub">개발팀을 단단하고 견고하게 만드는 백엔드 개발자로서의 핵심 역량을 소개합니다.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -289,17 +417,14 @@
                             <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
                                 <i class="fa-solid fa-shield-halved text-xl"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
-                                끝까지 책임지는 집요함 <br>
-                                <span class="text-xs text-stone-400 font-mono block mt-1">Responsibility</span>
-                            </h3>
-                            <p class="text-sm text-stone-400 leading-relaxed">
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors" data-i18n="charm-h1">끝까지 책임지는 집요함</h3>
+                            <p class="text-sm text-stone-400 leading-relaxed" data-i18n="charm-desc1">
                                 내가 담당한 기능과 코드에 대해서는 타협 없이 집요하게 파고듭니다. 많은 시간을 소모하고 밤을 새우더라도 완벽하게 원인을 추적해 내는 성실한 근성과 책임감을 탑재하고 있습니다.
                             </p>
                         </div>
                         <div class="pt-6 font-mono text-xs text-brand-accent flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
-                            <span>디버깅 성취율 100% 목표</span>
+                            <span data-i18n="charm-foot1">디버깅 성취율 100% 목표</span>
                         </div>
                     </div>
 
@@ -309,17 +434,14 @@
                             <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-secondary group-hover:scale-110 transition-transform">
                                 <i class="fa-solid fa-users text-xl"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-secondary transition-colors">
-                                유저를 향하는 백엔드 <br>
-                                <span class="text-xs text-stone-400 font-mono block mt-1">User-Centric</span>
-                            </h3>
-                            <p class="text-sm text-stone-400 leading-relaxed">
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-secondary transition-colors" data-i18n="charm-h2">유저를 향하는 백엔드</h3>
+                            <p class="text-sm text-stone-400 leading-relaxed" data-i18n="charm-desc2">
                                 단순한 API 서버 구축이나 DB 설계를 넘어, '어떻게 최적화해야 더 많은 사용자가 속도감 있게 AI 서비스를 경험할 수 있을까?'를 매 순간 유저 관점에서 철저히 연구합니다.
                             </p>
                         </div>
                         <div class="pt-6 font-mono text-xs text-brand-secondary flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-secondary"></span>
-                            <span>사용자 경험 지향 아키텍처</span>
+                            <span data-i18n="charm-foot2">사용자 경험 지향 아키텍처</span>
                         </div>
                     </div>
 
@@ -329,47 +451,98 @@
                             <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accentLight group-hover:scale-110 transition-transform">
                                 <i class="fa-solid fa-comments text-xl"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
-                                생각이 담긴 준비된 소통 <br>
-                                <span class="text-xs text-stone-400 font-mono block mt-1">Thoughtful Comm.</span>
-                            </h3>
-                            <p class="text-sm text-stone-400 leading-relaxed">
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors" data-i18n="charm-h3">생각이 담긴 준비된 소통</h3>
+                            <p class="text-sm text-stone-400 leading-relaxed" data-i18n="charm-desc3">
                                 이슈가 생기면 일방적인 질문 대신 해결책을 직접 먼저 고민하고 가설을 세워 부딪쳐 봅니다. 이후 정돈된 근거와 데이터를 들고 팀원들과 가장 효율적인 고밀도 소통을 지향합니다.
                             </p>
                         </div>
                         <div class="pt-6 font-mono text-xs text-brand-accentLight flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-accentLight"></span>
-                            <span>준비된 가설 기반 소통법</span>
+                            <span data-i18n="charm-foot3">준비된 가설 기반 소통법</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. [Hobbies] 일상/취미 탭 -->
+        <!-- 4. [Hobbies & Sandbox Playground] 취미 및 게이미피케이션 탭 -->
         <div id="tab-hobbies" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
-            <div class="max-w-5xl w-full my-auto">
-                <div class="space-y-3 mb-12">
+            <div class="max-w-5xl w-full my-auto space-y-12">
+                <div class="space-y-3">
                     <div class="flex items-center gap-3">
                         <div class="h-1 w-12 bg-brand-accent rounded"></div>
-                        <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight">Off duty : 개발 밖의 일상</h2>
+                        <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight" data-i18n="hobbies-title">Off duty & Playground</h2>
                     </div>
-                    <p class="text-sm text-stone-400 font-mono">코딩 밖에서 채워지는 에너지, 그것이 개발의 끈기로 이어집니다.</p>
+                    <p class="text-sm text-stone-400 font-mono" data-i18n="hobbies-subtitle">성장을 추동하는 일상 취미와, 가볍게 즐기는 AI 버그 스쿼셔 샌드박스입니다.</p>
                 </div>
 
+                <!-- 상단: 오락가락 미니게임 코너 -->
+                <div class="bg-brand-panel border border-brand-accent/20 rounded-2xl p-6 relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-4 right-4 bg-brand-accent/15 border border-brand-accent/30 text-brand-accent text-xs px-2.5 py-1 rounded font-mono flex items-center gap-1">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
+                        </span>
+                        <span data-i18n="game-badge">MINI GAME</span>
+                    </div>
+
+                    <div class="max-w-xl space-y-4 mb-6">
+                        <h3 class="text-xl font-bold text-brand-cream flex items-center gap-2">
+                            <i class="fa-solid fa-crosshairs text-brand-accent"></i>
+                            <span data-i18n="game-title">AI Bug Squasher : 백엔드 버그 퇴치 작전</span>
+                        </h3>
+                        <p class="text-xs sm:text-sm text-stone-400" data-i18n="game-desc">
+                            제한 시간 15초 동안 사방에서 튀어나오는 해로운 벌레(Bug)들을 재빠르게 눌러 소멸시키세요. <br>
+                            버그 격파 시 기분 좋은 8비트 아케이드 신디사이저 사운드(Web Audio API)가 출력됩니다!
+                        </p>
+                    </div>
+
+                    <!-- 버그게임 디스플레이 존 -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                        <div class="lg:col-span-8 bg-brand-bg rounded-xl border border-brand-panel-light h-64 relative overflow-hidden" id="game-arena">
+                            <!-- 게임 준비 레이어 -->
+                            <div class="absolute inset-0 bg-brand-panel/90 flex flex-col items-center justify-center z-10 gap-3" id="game-overlay">
+                                <span class="text-lg font-mono font-bold text-brand-cream" data-i18n="game-ready">스쿼시 작전을 개시할 준비가 되었나요?</span>
+                                <button onclick="startGame()" class="px-5 py-2.5 bg-brand-accent text-brand-cream rounded-full hover:bg-brand-accentLight transition-all font-bold font-mono text-sm shadow-lg">
+                                    START MISSION
+                                </button>
+                            </div>
+                            <!-- 사방으로 날아다닐 벌레 엘리먼트 템플릿(JS로 실시간 생성) -->
+                        </div>
+                        <div class="lg:col-span-4 bg-brand-panel-light border border-brand-panel rounded-xl p-4 flex flex-col justify-between font-mono">
+                            <div class="space-y-4">
+                                <div class="flex justify-between border-b border-brand-panel pb-2">
+                                    <span class="text-stone-500" data-i18n="game-score">Score</span>
+                                    <span class="text-brand-accent font-bold text-lg" id="game-score-val">0</span>
+                                </div>
+                                <div class="flex justify-between border-b border-brand-panel pb-2">
+                                    <span class="text-stone-500" data-i18n="game-time">Time Left</span>
+                                    <span class="text-brand-terminalYellow font-bold" id="game-timer-val">15s</span>
+                                </div>
+                                <div class="flex justify-between border-b border-brand-panel pb-2">
+                                    <span class="text-stone-500" data-i18n="game-high">Best Record</span>
+                                    <span class="text-brand-terminalGreen font-bold" id="game-high-val">0</span>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-stone-500 italic text-center mt-4">
+                                * This game synthesized pure wave audio dynamically. No static audio files.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 하단: 일상 소개 3열 카드 -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- 취미 1: 검도 -->
                     <div class="bg-brand-panel/40 border border-brand-accent/10 rounded-2xl p-6 hover:bg-brand-panel/60 hover:border-brand-accent/30 transition-all flex flex-col justify-between group shadow-lg">
                         <div class="space-y-4 text-stone-300">
                             <div class="text-3xl group-hover:scale-110 transition-transform duration-300 w-fit">⚔️</div>
                             <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">검도 (Kumdo)</h3>
-                            <p class="text-sm text-stone-400 leading-relaxed">
-                                매 호흡마다 흐트러짐 없는 자세를 유지해야 하는 검도. 여기서 다져진 깊은 <span class="text-brand-secondary font-medium">끈기</span>와 <span class="text-brand-secondary font-medium">매서운 집중력</span>을 바탕으로, 코드 상에서 까다로운 버그를 만났을 때도 타협 없이 끝까지 파고들어 마침내 깔끔하게 단칼에 베어냅니다.
+                            <p class="text-sm text-stone-400 leading-relaxed" data-i18n="hobby-desc1">
+                                매 호흡마다 흐트러짐 없는 자세를 유지해야 하는 검도. 여기서 다져진 깊은 끈기와 매서운 집중력을 바탕으로, 코드 상에서 까다로운 버그를 만났을 때도 타협 없이 끝까지 파고들어 마침내 깔끔하게 단칼에 베어냅니다.
                             </p>
                         </div>
-                        <div class="pt-6 font-mono text-xs text-brand-accentLight">
-                            #집중력 #끈기단련
-                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight">#집중력 #끈기단련</div>
                     </div>
 
                     <!-- 취미 2: FPS 게임 -->
@@ -377,13 +550,11 @@
                         <div class="space-y-4 text-stone-300">
                             <div class="text-3xl group-hover:scale-110 transition-transform duration-300 w-fit">🎮</div>
                             <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">FPS Game</h3>
-                            <p class="text-sm text-stone-400 leading-relaxed">
-                                발로란트, 배틀그라운드, 서든어택 등에서 가장 흥미를 갖는 부분은 미니맵을 보며 팀원들과 전장의 상황을 빈틈없이 브리핑하고 전략적인 수를 맞추는 것입니다. 이 협동력은 고스란히 개발 프로젝트로 이어져, 뒤에서 든든히 밀어주는 <span class="text-brand-secondary font-medium">서포트형 팀원</span>으로서의 역할을 보장합니다.
+                            <p class="text-sm text-stone-400 leading-relaxed" data-i18n="hobby-desc2">
+                                발로란트, 배틀그라운드, 서든어택 등에서 가장 흥미를 갖는 부분은 미니맵을 보며 팀원들과 전장의 상황을 빈틈없이 브리핑하고 전략적인 수를 맞추는 것입니다. 이 협동력은 고스란히 개발 프로젝트로 이어져, 뒤에서 든든히 밀어주는 서포트형 팀원으로서의 역할을 보장합니다.
                             </p>
                         </div>
-                        <div class="pt-6 font-mono text-xs text-brand-accentLight">
-                            #전략적브리핑 #든든한백업
-                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight">#전략적브리핑 #든든한백업</div>
                     </div>
 
                     <!-- 취미 3: 영화 감상 -->
@@ -391,13 +562,11 @@
                         <div class="space-y-4 text-stone-300">
                             <div class="text-3xl group-hover:scale-110 transition-transform duration-300 w-fit">🎬</div>
                             <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">영화 감상</h3>
-                            <p class="text-sm text-stone-400 leading-relaxed">
-                                등장인물의 사소한 대사, 배경의 장치 하나가 결말에 거대한 흐름을 만들어내는 잘 설계된 웰메이드 복선 영화를 선호합니다. 이처럼 세심하게 복선 구조를 살피는 통찰력을 기반으로, 데이터 파이프라인과 트랜잭션 하나도 <span class="text-brand-secondary font-medium">빈틈없고 탄탄하게 구조적으로 설계</span>하려 애씁니다.
+                            <p class="text-sm text-stone-400 leading-relaxed" data-i18n="hobby-desc3">
+                                등장인물의 사소한 대사, 배경의 장치 하나가 결말에 거대한 흐름을 만들어내는 잘 설계된 웰메이드 복선 영화를 선호합니다. 이처럼 세심하게 복선 구조를 살피는 통찰력을 기반으로, 데이터 파이프라인과 트랜잭션 하나도 빈틈없고 탄탄하게 구조적으로 설계하려 애씁니다.
                             </p>
                         </div>
-                        <div class="pt-6 font-mono text-xs text-brand-accentLight">
-                            #치밀한구조화 #복선추적
-                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight">#치밀한구조화 #복선추적</div>
                     </div>
                 </div>
             </div>
@@ -410,9 +579,9 @@
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-panel border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
                         <span class="w-2 h-2 rounded-full bg-brand-accent"></span> My Weapons
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight">Tech Stack : 나의 무기와 성장의 궤적</h2>
-                    <p class="text-sm sm:text-base text-stone-400 max-w-2xl mx-auto font-light">
-                        이미 완벽히 구사하는 기술을 너머, <span class="text-brand-accentLight font-semibold">현재 싸피(SSAFY)에서 가장 뜨겁게 파고들며</span> 빠르게 흡수하고 발전시키는 무기들입니다.
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight" data-i18n="tech-main">Tech Stack : 나의 무기와 성장의 궤적</h2>
+                    <p class="text-sm sm:text-base text-stone-400 max-w-2xl mx-auto font-light" data-i18n="tech-sub">
+                        이미 완벽히 구사하는 기술을 너머, 현재 싸피(SSAFY)에서 가장 뜨겁게 파고들며 빠르게 흡수하고 발전시키는 무기들입니다.
                     </p>
                 </div>
 
@@ -576,7 +745,7 @@
             <div class="max-w-5xl w-full my-auto">
                 <div class="flex items-center gap-3 mb-12">
                     <div class="h-1 w-12 bg-brand-accent rounded"></div>
-                    <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight">Collaboration : 나와 함께한다는 것</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight" data-i18n="collab-title">Collaboration : 나와 함께한다는 것</h2>
                 </div>
 
                 <div class="space-y-6">
@@ -586,16 +755,16 @@
                             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-accent/10 border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
                                 <span>01 / ALL-ROUNDER</span>
                             </div>
-                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
-                                기획부터 함께하는 올라운더 <span class="text-stone-400 font-light text-base">(Figma to Code)</span>
+                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors" data-i18n="collab-h1">
+                                기획부터 함께하는 올라운더
                             </h3>
-                            <p class="text-stone-400 text-sm leading-relaxed">
+                            <p class="text-stone-400 text-sm leading-relaxed" data-i18n="collab-desc1">
                                 피그마(Figma)를 직접 능숙하게 만지며 조율할 수 있습니다. 프론트엔드의 화면 단을 깊숙하게 미리 이해하고 있어, 초기 기획 단계에서 발생할 수 있는 소통 불일치를 대폭 줄이고 백엔드 데이터 모델링 싱크를 완벽히 극대화합니다.
                             </p>
                         </div>
                         <div class="flex items-center gap-2 self-start md:self-center font-mono text-xs text-stone-500">
                             <i class="fa-solid fa-compass-drafting text-brand-accent text-xl"></i>
-                            <span>협업 밀도 최상</span>
+                            <span data-i18n="collab-badge1">협업 밀도 최상</span>
                         </div>
                     </div>
 
@@ -605,16 +774,16 @@
                             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-accent/10 border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
                                 <span>02 / ROBUST BACKEND</span>
                             </div>
-                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
-                                빈틈없는 데이터의 수호자 <span class="text-stone-400 font-light text-base">(Robust Backend)</span>
+                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors" data-i18n="collab-h2">
+                                빈틈없는 데이터의 수호자
                             </h3>
-                            <p class="text-stone-400 text-sm leading-relaxed">
+                            <p class="text-stone-400 text-sm leading-relaxed" data-i18n="collab-desc2">
                                 나에게 할당된 서버 기능에서 에러가 터지는 꼴을 그냥 보고 넘기지 않습니다. 강력한 책임감으로 에러의 흔적을 끝까지 추적해 박멸하고, 대량의 호출과 특이 케이스에도 끄떡없이 든든하게 동작할 백엔드 인프라를 구축하는 데 집중합니다.
                             </p>
                         </div>
                         <div class="flex items-center gap-2 self-start md:self-center font-mono text-xs text-stone-500">
                             <i class="fa-solid fa-server text-brand-accent text-xl"></i>
-                            <span>무중단 지향 에러 박멸</span>
+                            <span data-i18n="collab-badge2">무중단 지향 에러 박멸</span>
                         </div>
                     </div>
 
@@ -624,56 +793,53 @@
                             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-accent/10 border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
                                 <span>03 / THOUGHTFUL FEEDBACK</span>
                             </div>
-                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
-                                근거 있는 준비된 소통 <span class="text-stone-400 font-light text-base">(Thoughtful Feedback)</span>
+                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors" data-i18n="collab-h3">
+                                근거 있는 준비된 소통
                             </h3>
-                            <p class="text-stone-400 text-sm leading-relaxed">
+                            <p class="text-stone-400 text-sm leading-relaxed" data-i18n="collab-desc3">
                                 팀에 무리한 부담을 지우는 모호한 질문 대신, 면밀한 자가 분석과 디버깅 결과를 우선 거친 후 이야기합니다. 정리된 여러 대안과 장단점 비교 데이터를 바탕으로 팀원들과 밀도 높고 결론이 신속한 정답형 대화를 지향합니다.
                             </p>
                         </div>
                         <div class="flex items-center gap-2 self-start md:self-center font-mono text-xs text-stone-500">
                             <i class="fa-solid fa-brain text-brand-accent text-xl"></i>
-                            <span>고효율 스마트 피드백</span>
+                            <span data-i18n="collab-badge3">고효율 스마트 피드백</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 7. [Contact] 컨택트 전용 탭 -->
+        <!-- 7. [Contact & Guestbook] 컨택트 및 방명록 탭 -->
         <div id="tab-contact" class="tab-content w-full flex-grow flex flex-col items-center justify-center py-16 px-4 hidden">
             <div class="max-w-4xl w-full my-auto space-y-12">
                 
-                <!-- CTA 성격의 매칭 메시지 -->
                 <div class="text-center space-y-6 max-w-2xl mx-auto">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight leading-tight">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight leading-tight" data-i18n="contact-main">
                         준비된 팀원 동희와 함께 <br>
                         성공적인 프로젝트 빌딩을 해보실래요?
                     </h2>
-                    <p class="text-stone-300 text-sm sm:text-base font-light">
+                    <p class="text-stone-300 text-sm sm:text-base font-light" data-i18n="contact-sub">
                         에러 앞에서 망설임 없이 밤을 새우며, AI를 활용해 서비스의 깊이를 더해줄 백엔드 파트너를 찾고 계시다면 지금 바로 문의하세요.
                     </p>
                 </div>
 
-                <!-- 연락 방식 카드 (이메일 & 깃허브) -->
+                <!-- 연락 방식 카드 -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto text-center font-mono">
                     <!-- 이메일 카드 -->
-                    <div class="bg-brand-panel/50 border border-brand-accent/10 p-6 rounded-2xl hover:border-brand-accent/30 transition-all flex flex-col items-center gap-3 shadow-lg">
+                    <div class="bg-brand-panel/50 border border-brand-accent/10 p-6 rounded-2xl hover:border-brand-accent/30 transition-all flex flex-col items-center justify-center gap-3 shadow-lg">
                         <span class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-accent">
                             <i class="fa-solid fa-envelope text-lg"></i>
                         </span>
                         <span class="text-xs text-stone-500">Email Contact</span>
-                        <!-- 복사 기능 -->
                         <button onclick="copyToClipboard('hongricky73@naver.com')" class="text-brand-cream hover:text-brand-accentLight font-semibold text-sm transition-colors cursor-pointer group flex items-center gap-1.5 focus:outline-none">
                             hongricky73@naver.com
                             <i class="fa-regular fa-copy text-xs text-stone-500 group-hover:text-brand-accentLight transition-colors"></i>
                         </button>
-                        <!-- 복사 성공 토스트 피드백 -->
                         <span id="copy-feedback" class="text-[10px] text-brand-terminalGreen opacity-0 transition-opacity">클립보드에 이메일이 복사되었습니다!</span>
                     </div>
 
                     <!-- 깃허브 카드 -->
-                    <a href="https://github.com/donghee9948" target="_blank" rel="noopener noreferrer" class="bg-brand-panel/50 border border-brand-accent/10 p-6 rounded-2xl hover:border-brand-accent/30 transition-all flex flex-col items-center gap-3 group shadow-lg">
+                    <a href="https://github.com/donghee9948" target="_blank" rel="noopener noreferrer" class="bg-brand-panel/50 border border-brand-accent/10 p-6 rounded-2xl hover:border-brand-accent/30 transition-all flex flex-col items-center justify-center gap-3 group shadow-lg">
                         <span class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
                             <i class="fa-brands fa-github text-xl"></i>
                         </span>
@@ -684,7 +850,48 @@
                     </a>
                 </div>
 
-                <!-- 싸피 동희 응원 문구 -->
+                <!-- 로컬 방명록 코너 -->
+                <div class="bg-brand-panel/60 border border-brand-accent/15 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto space-y-6 shadow-xl">
+                    <h3 class="text-xl font-bold font-mono text-brand-cream flex items-center gap-2">
+                        <i class="fa-solid fa-pen-nib text-brand-accent"></i>
+                        <span data-i18n="guest-title">방명록 한 줄 남기기</span>
+                    </h3>
+                    
+                    <!-- 방명록 등록 폼 -->
+                    <form id="guestbook-form" onsubmit="addGuestbookMessage(event)" class="space-y-4 font-mono text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <input type="text" id="guest-name" required placeholder="작성자 / Name" class="bg-brand-bg/80 border border-brand-accent/20 rounded-xl px-4 py-2.5 text-brand-cream placeholder-stone-600 focus:outline-none focus:border-brand-accent transition-all col-span-1">
+                            <input type="text" id="guest-text" required placeholder="메시지 내용 / Message" class="bg-brand-bg/80 border border-brand-accent/20 rounded-xl px-4 py-2.5 text-brand-cream placeholder-stone-600 focus:outline-none focus:border-brand-accent transition-all col-span-2">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <!-- 이모지 아바타 선택자 -->
+                            <div class="flex items-center gap-2 bg-brand-bg/60 border border-brand-panel px-3 py-1.5 rounded-xl text-xs text-stone-400">
+                                <span data-i18n="guest-avatar">아바타 선택:</span>
+                                <select id="guest-avatar-select" class="bg-transparent text-brand-cream focus:outline-none cursor-pointer">
+                                    <option value="💻">💻 Code</option>
+                                    <option value="☕">☕ Coffee</option>
+                                    <option value="⚔️">⚔️ Sword</option>
+                                    <option value="🎮">🎮 Game</option>
+                                    <option value="🔥">🔥 Hot</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="px-5 py-2.5 bg-brand-accent/25 hover:bg-brand-accent/40 text-brand-cream border border-brand-accent/40 rounded-xl font-bold transition-all" data-i18n="guest-submit">등록 / Post</button>
+                        </div>
+                    </form>
+
+                    <!-- 피드 리스트 디스플레이 -->
+                    <div class="border-t border-brand-panel/80 pt-4 space-y-3 max-h-52 overflow-y-auto no-scrollbar" id="guestbook-list">
+                        <!-- 동적 데이터 렌더링 영역 -->
+                    </div>
+
+                    <!-- 세 번째 이스터에그 (방명록 한구석에 숨은 보이지 않는 작은 별) -->
+                    <div class="text-left">
+                        <button onclick="revealEasterEgg(3)" id="easter-3" class="text-stone-700 hover:text-brand-accentLight transition-all p-1 text-[10px] egg-active">
+                            ★
+                        </button>
+                    </div>
+                </div>
+
                 <div class="text-center text-xs font-mono text-stone-500 space-y-1">
                     <p class="text-stone-400 font-semibold">SSAFY 구미 캠퍼스 4반 김동희</p>
                     <p>Designed with ❤️ for Developer synergy</p>
@@ -694,8 +901,8 @@
 
     </main>
 
-    <!-- 글로벌 최소화 푸터 (각 화면 맨 밑에 심플하게 표시) -->
-    <footer class="bg-brand-bg border-t border-brand-panel/40 py-6 px-4">
+    <!-- 글로벌 푸터 -->
+    <footer class="bg-brand-bg border-t border-brand-panel/40 py-6 px-4 z-10 relative">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-stone-500 text-center sm:text-left">
             <div>
                 <p>&copy; 2026 Kim Dong Hee. All rights reserved.</p>
@@ -708,9 +915,202 @@
         </div>
     </footer>
 
-    <!-- 자바스크립트 라우팅 및 애니메이션 소스코드 -->
+    <!-- 자바스크립트 라우팅, 커서, 스크롤바, 다국어 i18n, 로컬방명록, 오디오 및 이스터에그 모듈 -->
     <script>
-        // 1. 탭 리스트 매핑
+        // ============================================
+        // 🌐 다국어 i18n 번역 데이터 맵 구축
+        // ============================================
+        const translations = {
+            ko: {
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-charms": "Charms",
+                "nav-offduty": "Off-duty",
+                "nav-tech": "Tech",
+                "nav-collaboration": "Collaboration",
+                "nav-contact": "Contact",
+                "profile-name": "김동희",
+                "profile-location": "SSAFY 구미 캠퍼스 (4반)",
+                "profile-role": "AI Backend Engineer Candidate",
+                "target-audience": "Target Audience:",
+                "btn-go-about": "상세 소개 보기 (About)",
+                "about-title": "About Me : 김동희",
+                "meta-name": "김동희",
+                "meta-age": "27세",
+                "meta-location": "SSAFY 구미 4반",
+                "about-intro": "\"이번 1학기 동안 서로 자극을 주며 함께 성장하실 분들을 찾고 있습니다.\"",
+                "about-desc": "에러 앞에서 밤새는 것을 두려워하지 않는 집요함으로 든든한 백엔드를 책임지겠습니다! 기능이 정상적으로 작동하는 것은 당연하며, 효율적인 아키텍처와 최적화된 데이터 흐름을 통해 실제 유저에게 완성도 높은 가치를 안전하게 서비스하는 것을 최종 지향점으로 삼고 있습니다.",
+                "timeline-title": "학습 및 성장 타임라인",
+                "timeline-date1": "2018 - 2024",
+                "timeline-head1": "컴퓨터공학 기초 수립 (전공 교육 수료)",
+                "timeline-desc1": "자료구조, 알고리즘, 시스템 아키텍처의 원리를 이해하고 핵심 프로그래밍 능력을 함양했습니다.",
+                "timeline-date2": "2024 - 2025",
+                "timeline-head2": "AI 파이프라인 및 Flutter 경험",
+                "timeline-desc2": "Python 기반 AI 모델 서빙 프로토타입 설계 및 Dart/Flutter 크로스플랫폼 통합 앱 환경을 주도적으로 테스트했습니다.",
+                "timeline-date3": "2026 - Present",
+                "timeline-head3": "SSAFY 구미 4반 Deep Diving",
+                "timeline-desc3": "Spring Boot 프레임워크와 대용량 트래픽에 최적화된 Redis 하이퍼 캐싱 전략 연구, 협업 프로젝트 완수를 지향하고 있습니다.",
+                "charms-main": "협업에 기여할 세 가지 무기",
+                "charms-sub": "개발팀을 단단하고 견고하게 만드는 백엔드 개발자로서의 핵심 역량을 소개합니다.",
+                "charm-h1": "끝까지 책임지는 집요함",
+                "charm-desc1": "내가 담당한 기능과 코드에 대해서는 타협 없이 집요하게 파고듭니다. 많은 시간을 소모하고 밤을 새우더라도 완벽하게 원인을 추적해 내는 성실한 근성과 책임감을 탑재하고 있습니다.",
+                "charm-foot1": "디버깅 성취율 100% 목표",
+                "charm-h2": "유저를 향하는 백엔드",
+                "charm-desc2": "단순한 API 서버 구축이나 DB 설계를 넘어, '어떻게 최적화해야 더 많은 사용자가 속도감 있게 AI 서비스를 경험할 수 있을까?'를 매 순간 유저 관점에서 철저히 연구합니다.",
+                "charm-foot2": "사용자 경험 지향 아키텍처",
+                "charm-h3": "생각이 담긴 준비된 소통",
+                "charm-desc3": "이슈가 생기면 일방적인 질문 대신 해결책을 직접 먼저 고민하고 가설을 세워 부딪쳐 봅니다. 이후 정돈된 근거와 데이터를 들고 팀원들과 가장 효율적인 고밀도 소통을 지향합니다.",
+                "charm-foot3": "준비된 가설 기반 소통법",
+                "hobbies-title": "Off duty & Playground",
+                "hobbies-subtitle": "성장을 추동하는 일상 취미와, 가볍게 즐기는 AI 버그 스쿼셔 샌드박스입니다.",
+                "game-badge": "MINI GAME",
+                "game-title": "AI Bug Squasher : 백엔드 버그 퇴치 작전",
+                "game-desc": "제한 시간 15초 동안 사방에서 튀어나오는 해로운 벌레(Bug)들을 재빠르게 눌러 소멸시키세요. 버그 격파 시 기분 좋은 8비트 아케이드 신디사이저 사운드가 출력됩니다!",
+                "game-ready": "스쿼시 작전을 개시할 준비가 되었나요?",
+                "game-score": "Score",
+                "game-time": "Time Left",
+                "game-high": "Best Record",
+                "hobby-desc1": "매 호흡마다 흐트러짐 없는 자세를 유지해야 하는 검도. 여기서 다져진 깊은 끈기와 매서운 집중력을 바탕으로, 코드 상에서 까다로운 버그를 만났을 때도 타협 없이 끝까지 파고들어 마침내 깔끔하게 단칼에 베어냅니다.",
+                "hobby-desc2": "발로란트, 배틀그라운드, 서든어택 등에서 가장 흥미를 갖는 부분은 미니맵을 보며 팀원들과 전장의 상황을 빈틈없이 브리핑하고 전략적인 수를 맞추는 것입니다. 이 협동력은 고스란히 개발 프로젝트로 이어져, 서포트형 팀원으로서의 역할을 보장합니다.",
+                "hobby-desc3": "등장인물의 사소한 대사, 배경의 장치 하나가 결말에 거대한 흐름을 만들어내는 잘 설계된 웰메이드 복선 영화를 선호합니다. 이처럼 세심하게 복선 구조를 살피는 통찰력을 기반으로, 데이터 파이프라인과 트랜잭션 하나도 빈틈없고 탄탄하게 구조적으로 설계하려 애씁니다.",
+                "tech-main": "Tech Stack : 나의 무기와 성장의 궤적",
+                "tech-sub": "이미 완벽히 구사하는 기술을 너머, 현재 싸피(SSAFY)에서 가장 뜨겁게 파고들며 빠르게 흡수하고 발전시키는 무기들입니다.",
+                "collab-title": "Collaboration : 나와 함께한다는 것",
+                "collab-h1": "기획부터 함께하는 올라운더 (Figma to Code)",
+                "collab-desc1": "피그마(Figma)를 직접 능숙하게 만지며 조율할 수 있습니다. 프론트엔드의 화면 단을 깊숙하게 미리 이해하고 있어, 초기 기획 단계에서 발생할 수 있는 소통 불일치를 대폭 줄이고 백엔드 데이터 모델링 싱크를 완벽히 극대화합니다.",
+                "collab-badge1": "협업 밀도 최상",
+                "collab-h2": "빈틈없는 데이터의 수호자 (Robust Backend)",
+                "collab-desc2": "나에게 할당된 서버 기능에서 에러가 터지는 꼴을 그냥 보고 넘기지 않습니다. 강력한 책임감으로 에러의 흔적을 끝까지 추적해 박멸하고, 대량의 호출과 특이 케이스에도 끄떡없이 든든하게 동작할 백엔드 인프라를 구축하는 데 집중합니다.",
+                "collab-badge2": "무중단 지향 에러 박멸",
+                "collab-h3": "근거 있는 준비된 소통 (Thoughtful Feedback)",
+                "collab-desc3": "팀에 무리한 부담을 지우는 모호한 질문 대신, 면밀한 자가 분석과 디버깅 결과를 우선 거친 후 이야기합니다. 정리된 여러 대안과 장단점 비교 데이터를 바탕으로 팀원들과 밀도 높고 결론이 신속한 정답형 대화를 지향합니다.",
+                "collab-badge3": "고효율 스마트 피드백",
+                "contact-main": "준비된 팀원 동희와 함께 성공적인 프로젝트 빌딩을 해보실래요?",
+                "contact-sub": "에러 앞에서 망설임 없이 밤을 새우며, AI를 활용해 서비스의 깊이를 더해줄 백엔드 파트너를 찾고 계시다면 지금 바로 문의하세요.",
+                "guest-title": "방명록 한 줄 남기기",
+                "guest-avatar": "아바타 선택:",
+                "guest-submit": "등록"
+            },
+            en: {
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-charms": "Charms",
+                "nav-offduty": "Off-duty",
+                "nav-tech": "Tech",
+                "nav-collaboration": "Collab",
+                "nav-contact": "Contact",
+                "profile-name": "Donghee Kim",
+                "profile-location": "SSAFY Gumi Campus (Class 4)",
+                "profile-role": "AI Backend Engineer Candidate",
+                "target-audience": "Target Audience:",
+                "btn-go-about": "View Profile Details (About)",
+                "about-title": "About Me : Donghee Kim",
+                "meta-name": "Donghee Kim",
+                "meta-age": "27 Years Old",
+                "meta-location": "SSAFY Gumi, Class 4",
+                "about-intro": "\"I am searching for partners to learn, scale, and grow together this semester.\"",
+                "about-desc": "I secure robust backend architectures with relentless persistence, never fearing endless debugging sessions. Beyond building standard APIs, my goal is delivering high-performance, user-centric AI production systems securely.",
+                "timeline-title": "Learning & Career Journey",
+                "timeline-date1": "2018 - 2024",
+                "timeline-head1": "Academic Foundation in Computer Science",
+                "timeline-desc1": "Completed rigorous coursework in Data Structures, Algorithms, and System Architectures to build core programming strengths.",
+                "timeline-date2": "2024 - 2025",
+                "timeline-head2": "AI Pipelines & Mobile SDK Testing",
+                "timeline-desc2": "Designed simple AI serving prototypes using Python frameworks and tested Flutter multiplatform integration environments.",
+                "timeline-date3": "2026 - Present",
+                "timeline-head3": "Deep Diving at SSAFY Gumi",
+                "timeline-desc3": "Focusing heavily on robust Java/Spring Boot server ecosystems, high-performance Redis caching, and real-world team projects.",
+                "charms-main": "Three Key Strengths I Bring",
+                "charms-sub": "Key engineering principles I stand for to make development teams resilient and fast.",
+                "charm-h1": "Relentless Ownership & Persistence",
+                "charm-desc1": "I stay highly accountable for my assigned logic. I trace memory leaks and production bugs until they are resolved, ensuring clean deliverables.",
+                "charm-foot1": "Aiming for 100% Debugging Success",
+                "charm-h2": "User-First API Optimization",
+                "charm-desc2": "I study system responsiveness from the perspective of real end-users, designing database layers that deliver fast responses.",
+                "charm-foot2": "User-Centric Architecture Design",
+                "charm-h3": "Thoughtful, Prepared Collaboration",
+                "charm-desc3": "When a bottleneck arises, I analyze metrics first. I brainstorm hypotheses and present clean, structured trade-offs to the team for optimal decisions.",
+                "charm-foot3": "Data-Driven Communication Style",
+                "hobbies-title": "Off duty & Playground",
+                "hobbies-subtitle": "Balancing life's momentum with focus, and enjoying a retro canvas bug squashing sandbox.",
+                "game-badge": "MINI GAME",
+                "game-title": "AI Bug Squasher : Backend Rescue Mission",
+                "game-desc": "Squash incoming bugs in 15 seconds. Each successful squash triggers an 8-bit dynamic audio synthesizer chime!",
+                "game-ready": "Are you ready to initiate the bug-squashing pipeline?",
+                "game-score": "Score",
+                "game-time": "Time Left",
+                "game-high": "Best Record",
+                "hobby-desc1": "Kendo requires strict posture and intense breathing control. This builds relentless focus, helping me target and slice complex bugs on my first strike.",
+                "hobby-desc2": "In team FPS games, I excel at real-time communication and mapping strategic plays. I translate this into being a highly supportive developer team-player.",
+                "hobby-desc3": "I love movies where tiny, clever details build up to a grand payoff. I carry this appreciation of strict logic into writing cleanly structured data flows.",
+                "tech-main": "Tech Stack : Growth Trajectory",
+                "tech-sub": "Technologies I have fully acquired and those I am currently absorbing with intense focus at SSAFY.",
+                "collab-title": "Collaboration : Core Values",
+                "collab-h1": "All-Rounder Involvement (Figma to Code)",
+                "collab-desc1": "I translate Figma designs smoothly into backend interfaces, eliminating communication gaps and aligning system models with layouts early on.",
+                "collab-badge1": "High Synergy Collaboration",
+                "collab-h2": "Robust Backend Architect (No Room For Errors)",
+                "collab-desc2": "I don't tolerate failing services. I build bulletproof infrastructures that handle surge loads and strange edge-case faults.",
+                "collab-badge2": "Reliable Server Frameworks",
+                "collab-h3": "Thoughtful Communication (No Ambiguous Questions)",
+                "collab-desc3": "Instead of passing raw questions, I run diagnostics and approach team members with organized, structured alternatives to save time.",
+                "collab-badge3": "High Density Smart Feedback",
+                "contact-main": "Ready to build something impactful together?",
+                "contact-sub": "If you are looking for an AI backend partner who stays up with you to squash production blockages, reach out now.",
+                "guest-title": "Leave a Public Message",
+                "guest-avatar": "Choose Avatar:",
+                "guest-submit": "Post Message"
+            }
+        };
+
+        let currentLang = 'ko';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            localStorage.setItem('lang', lang);
+
+            // data-i18n 속성을 가진 모든 엘리먼트 텍스트 갱신
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // 입력 플레이스홀더 텍스트 현지화
+            const nameInput = document.getElementById('guest-name');
+            const msgInput = document.getElementById('guest-text');
+            if (nameInput && msgInput) {
+                if (lang === 'en') {
+                    nameInput.placeholder = "Name";
+                    msgInput.placeholder = "Message";
+                } else {
+                    nameInput.placeholder = "작성자 / Name";
+                    msgInput.placeholder = "메시지 내용 / Message";
+                }
+            }
+
+            // 토글 버튼 라벨 동기화
+            const langBtn = document.getElementById('lang-toggle-btn');
+            const langBtnMobile = document.getElementById('lang-toggle-btn-mobile');
+            if (langBtn) langBtn.textContent = lang === 'ko' ? 'EN' : 'KO';
+            if (langBtnMobile) langBtnMobile.textContent = lang === 'ko' ? 'EN' : 'KO';
+
+            // 타이핑 문구 언어 전환 트리거
+            resetAndStartTyping();
+        }
+
+        // 언어 토글 이벤트 핸들러 바인딩
+        const triggerLangToggle = () => {
+            setLanguage(currentLang === 'ko' ? 'en' : 'ko');
+        };
+        document.getElementById('lang-toggle-btn').addEventListener('click', triggerLangToggle);
+        document.getElementById('lang-toggle-btn-mobile').addEventListener('click', triggerLangToggle);
+
+        // ============================================
+        // 🚀 탭 리스트 매핑 및 SPA 라우팅
+        // ============================================
         const tabs = {
             '#home': document.getElementById('tab-home'),
             '#about': document.getElementById('tab-about'),
@@ -721,17 +1121,19 @@
             '#contact': document.getElementById('tab-contact')
         };
 
-        // 2. 타이핑 애니메이션 변수 및 함수
+        // 타이핑 애니메이션 변수 및 함수
         const typedTextSpan = document.getElementById("typed-text");
-        const phrase = "데이터의 흐름에 AI의 효율을 더하는 백엔드 엔지니어";
+        const phraseKo = "데이터의 흐름에 AI의 효율을 더하는 백엔드 엔지니어";
+        const phraseEn = "Backend Engineer streamlining data pipelines with AI efficiency.";
         let charIndex = 0;
         let typingTimeout;
 
         function type() {
-            if (charIndex < phrase.length) {
-                typedTextSpan.textContent += phrase.charAt(charIndex);
+            const currentPhrase = currentLang === 'ko' ? phraseKo : phraseEn;
+            if (charIndex < currentPhrase.length) {
+                typedTextSpan.textContent += currentPhrase.charAt(charIndex);
                 charIndex++;
-                typingTimeout = setTimeout(type, 100);
+                typingTimeout = setTimeout(type, 70);
             }
         }
 
@@ -739,28 +1141,21 @@
             clearTimeout(typingTimeout);
             typedTextSpan.textContent = "";
             charIndex = 0;
-            // 살짝 여백을 주고 시작
             setTimeout(type, 300);
         }
 
-        // 3. 해시 변경 감지 및 탭 전환 라우터 (SPA 핵심 구조)
         function handleTabRouting() {
-            // 주소창 해시 획득 (없으면 #home 기본값)
             let hash = window.location.hash || '#home';
-            
-            // 등록된 탭이 아닌 엉뚱한 해시 입력 방지 예외 처리
             if (!tabs[hash]) {
                 hash = '#home';
             }
 
-            // 모든 탭 페이드 아웃 및 숨기기
             Object.keys(tabs).forEach(key => {
                 const tabEl = tabs[key];
                 tabEl.classList.add('hidden', 'opacity-0', 'scale-[0.98]');
                 tabEl.classList.remove('opacity-100', 'scale-100');
             });
 
-            // 해당 활성 탭 나타내기 (약간의 프레임 버퍼 후 애니메이션 작동)
             const activeTab = tabs[hash];
             activeTab.classList.remove('hidden');
             setTimeout(() => {
@@ -768,15 +1163,13 @@
                 activeTab.classList.add('opacity-100', 'scale-100');
             }, 50);
 
-            // 네비게이션 활성 스타일링 동기화
+            // 네비게이션 동기화
             document.querySelectorAll('.nav-link').forEach(link => {
                 const href = link.getAttribute('href');
                 if (href === hash) {
-                    // 활성화 상태 디자인
                     link.classList.add('text-brand-accentLight', 'bg-brand-panelLight', 'border-brand-accent/20');
                     link.classList.remove('text-stone-300');
                 } else {
-                    // 비활성화 상태 디자인
                     link.classList.remove('text-brand-accentLight', 'bg-brand-panelLight', 'border-brand-accent/20');
                     if (!link.classList.contains('bg-brand-accent/20')) {
                         link.classList.add('text-stone-300');
@@ -784,19 +1177,19 @@
                 }
             });
 
-            // 홈 탭일 경우 타이핑 이펙트 가동
             if (hash === '#home') {
                 resetAndStartTyping();
             }
 
-            // 탭 변경 시 스크롤 위치 항상 맨 위로 강제 리셋
             window.scrollTo({ top: 0, behavior: 'instant' });
+            updateScrollProgress();
         }
 
-        // 4. 이벤트 바인딩 (해시 변경 시 라우터 재호출)
         window.addEventListener('hashchange', handleTabRouting);
 
-        // 5. 모바일 토글 메뉴 제어
+        // ============================================
+        // 🚀 모바일 토글 메뉴 제어
+        // ============================================
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -804,19 +1197,20 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // 모바일 메뉴 클릭 시 자동 접힘 처리
         document.querySelectorAll('#mobile-menu .nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
         });
 
-        // 6. 이메일 클립보드 간편 복사 및 토스트 피드백 처리
+        // ============================================
+        // 🚀 이메일 클립보드 복사
+        // ============================================
         function copyToClipboard(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
             try {
                 document.execCommand('copy');
                 const feedback = document.getElementById('copy-feedback');
@@ -827,13 +1221,498 @@
                     feedback.classList.add('opacity-0');
                 }, 2000);
             } catch (err) {
-                console.error('클립보드 복사 에러:', err);
+                console.error('Copy failure:', err);
             }
-            document.body.removeChild(textArea);
+            document.body.removeChild(tempInput);
         }
 
-        // 7. 첫 페이지 초기 가동 로드 핸들러
+        // ============================================
+        // ============================================
+        // 🚀 스크롤 진행률 상단 바 갱신
+        function updateScrollProgress() {
+            const scrollProgress = document.getElementById('scroll-progress');
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+            scrollProgress.style.width = `${progress}%`;
+        }
+        window.addEventListener('scroll', updateScrollProgress);
+
+        // ============================================
+        // 🚀 다크모드 / 라이트모드 토글 모듈
+        // ============================================
+        const themeBtns = [
+            document.getElementById('theme-toggle-btn'),
+            document.getElementById('theme-toggle-btn-mobile')
+        ];
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            themeBtns.forEach(btn => {
+                if (!btn) return;
+                const sunIcon = btn.querySelector('.light-icon, .light-icon-mobile');
+                const moonIcon = btn.querySelector('.dark-icon, .dark-icon-mobile');
+                
+                if (theme === 'light') {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+            });
+
+            if (theme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        themeBtns.forEach(btn => {
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+        });
+
+        // 테마 선호도 로드
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+
+        // ============================================
+        // ============================================
+        // 🚀 은은한 백그라운드 파티클 애니메이션
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 45;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                else if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                else if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                // 현재 다크/라이트 테마에 따른 파티클 색상 분기
+                const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                ctx.fillStyle = isLight ? 'rgba(194, 89, 63, 0.4)' : 'rgba(224, 122, 95, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // 가까운 파티클 연결 실선 그리기
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            const strokeColor = isLight ? 'rgba(194, 89, 63, 0.04)' : 'rgba(224, 122, 95, 0.05)';
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = 0.5;
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ============================================
+        // ============================================
+        // 🚀 커스텀 마우스 커서 (Lerp 보간 기법)
+        const cursorDot = document.getElementById('custom-cursor-dot');
+        const cursorRing = document.getElementById('custom-cursor-ring');
+        
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        });
+
+        function animateCursorRing() {
+            const ease = 0.14; 
+            ringX += (mouseX - ringX) * ease;
+            ringY += (mouseY - ringY) * ease;
+            cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursorRing);
+        }
+        animateCursorRing();
+
+        document.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '0';
+            cursorRing.style.opacity = '0';
+        });
+        document.addEventListener('mouseenter', () => {
+            cursorDot.style.opacity = '1';
+            cursorRing.style.opacity = '1';
+        });
+
+        // 인터랙티브 요소 호버 디자인 변화
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, [onclick], .nav-link, select, input, .cursor-pointer')) {
+                cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(1.6)`;
+                cursorRing.style.backgroundColor = 'rgba(224, 122, 95, 0.15)';
+                cursorRing.style.borderColor = 'transparent';
+                cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(0.6)`;
+            }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, [onclick], .nav-link, select, input, .cursor-pointer')) {
+                cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(1)`;
+                cursorRing.style.backgroundColor = 'transparent';
+                cursorRing.style.borderColor = 'rgba(224, 122, 95, 0.5)';
+                cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(1)`;
+            }
+        });
+
+        // ============================================
+        // ============================================
+        // 🚀 로컬 방명록 모듈 (localStorage)
+        let guestbookData = [];
+
+        function loadGuestbook() {
+            const data = localStorage.getItem('donghee_guestbook');
+            if (data) {
+                guestbookData = JSON.parse(data);
+            } else {
+                // 초깃값 데이터 셋업
+                guestbookData = [
+                    { name: "싸피동료", avatar: "💻", text: "동희님 1학기 프로젝트 같이 부셔봐요! 화이팅!", date: "2026-07-10" },
+                    { name: "교수님", avatar: "🔥", text: "INTJ 백엔드 엔지니어의 디버깅 근성을 응원합니다.", date: "2026-07-11" }
+                ];
+                saveGuestbook();
+            }
+            renderGuestbook();
+        }
+
+        function saveGuestbook() {
+            localStorage.setItem('donghee_guestbook', JSON.stringify(guestbookData));
+        }
+
+        function renderGuestbook() {
+            const container = document.getElementById('guestbook-list');
+            container.innerHTML = '';
+
+            guestbookData.slice().reverse().forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'bg-brand-bg/80 border border-brand-panel-light p-3.5 rounded-xl flex items-start gap-3 transition-all hover:border-brand-accent/20 animate-fade-in font-mono text-xs';
+                itemEl.innerHTML = `
+                    <span class="text-xl bg-brand-panel p-2 rounded-lg flex items-center justify-center select-none">${item.avatar}</span>
+                    <div class="flex-grow space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-brand-cream">${escapeHTML(item.name)}</span>
+                            <span class="text-[10px] text-stone-500">${item.date}</span>
+                        </div>
+                        <p class="text-stone-300 leading-relaxed">${escapeHTML(item.text)}</p>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+        }
+
+        function addGuestbookMessage(e) {
+            e.preventDefault();
+            const nameEl = document.getElementById('guest-name');
+            const textEl = document.getElementById('guest-text');
+            const avatarEl = document.getElementById('guest-avatar-select');
+
+            const name = nameEl.value.trim();
+            const text = textEl.value.trim();
+            const avatar = avatarEl.value;
+
+            if (!name || !text) return;
+
+            const today = new Date().toISOString().split('T')[0];
+            const newItem = { name, avatar, text, date: today };
+
+            guestbookData.push(newItem);
+            saveGuestbook();
+            renderGuestbook();
+
+            // 폼 리셋
+            nameEl.value = '';
+            textEl.value = '';
+            
+            // 효과음 재생
+            playSynthSound(440, "sine", 0.1);
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // ============================================
+        // ============================================
+        // 🚀 Web Audio API 8비트 아케이드 신디사이저 사운드
+        let audioCtx = null;
+
+        function playSynthSound(freq, type = 'sine', duration = 0.15) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                // AudioContext 활성화 상태 보장
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime); // 볼륨 안전 수치
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.warn('Audio Context is blocked or not supported on this device.');
+            }
+        }
+
+        // ============================================
+        // ============================================
+        // 🚀 게이미피케이션: Bug Squasher 미니게임 엔진
+        let gameScore = 0;
+        let gameTimer = 15;
+        let gameInterval = null;
+        let bugSpawnTimeout = null;
+        let isGameRunning = false;
+        let bestRecord = localStorage.getItem('bug_high_score') || 0;
+
+        document.getElementById('game-high-val').textContent = bestRecord;
+
+        function startGame() {
+            if (isGameRunning) return;
+            isGameRunning = true;
+            gameScore = 0;
+            gameTimer = 15;
+            document.getElementById('game-score-val').textContent = gameScore;
+            document.getElementById('game-timer-val').textContent = gameTimer + "s";
+            document.getElementById('game-overlay').classList.add('hidden');
+
+            // 게임 시작 사운드 (아르페지오 신호음)
+            playSynthSound(523.25, "square", 0.1); // C5
+            setTimeout(() => playSynthSound(659.25, "square", 0.1), 120); // E5
+            setTimeout(() => playSynthSound(783.99, "square", 0.15), 240); // G5
+
+            gameInterval = setInterval(() => {
+                gameTimer--;
+                document.getElementById('game-timer-val').textContent = gameTimer + "s";
+
+                if (gameTimer <= 0) {
+                    endGame();
+                }
+            }, 1000);
+
+            spawnBug();
+        }
+
+        function spawnBug() {
+            if (!isGameRunning) return;
+
+            const arena = document.getElementById('game-arena');
+            const bug = document.createElement('div');
+            
+            // 벌레 이모지 무작위 선택
+            const bugs = ['🐛', '🪲', '🕷️', '🦗'];
+            const randomBug = bugs[Math.floor(Math.random() * bugs.length)];
+
+            bug.textContent = randomBug;
+            bug.className = 'absolute text-2xl cursor-pointer select-none transition-transform hover:scale-125 p-2';
+            
+            // 아레나 내부 랜덤 위치 계산
+            const maxW = arena.clientWidth - 40;
+            const maxH = arena.clientHeight - 40;
+            const posX = Math.random() * maxW;
+            const posY = Math.random() * maxH;
+
+            bug.style.left = `${posX}px`;
+            bug.style.top = `${posY}px`;
+
+            // 클릭 타격 이벤트 바인딩
+            bug.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                if (!isGameRunning) return;
+                
+                gameScore++;
+                document.getElementById('game-score-val').textContent = gameScore;
+                
+                // 타격 시 하이피치 격파 사운드 (Web Audio API)
+                playSynthSound(987.77, "sawtooth", 0.08); // B5
+                
+                // 격파 시각 피드백 연출 후 소멸
+                bug.textContent = '💥';
+                bug.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    bug.remove();
+                }, 150);
+            });
+
+            arena.appendChild(bug);
+
+            // 1.5초 후 자동으로 기어 다니다 사라지기
+            setTimeout(() => {
+                if (bug.parentNode) {
+                    bug.remove();
+                }
+            }, 1600);
+
+            // 스폰 속도는 뒤로 갈수록 빨라짐
+            const spawnDelay = Math.max(300, 800 - (15 - gameTimer) * 35);
+            bugSpawnTimeout = setTimeout(spawnBug, spawnDelay);
+        }
+
+        function endGame() {
+            isGameRunning = false;
+            clearInterval(gameInterval);
+            clearTimeout(bugSpawnTimeout);
+
+            // 아레나 잔여 벌레 청소
+            const arena = document.getElementById('game-arena');
+            const bugs = arena.querySelectorAll('.absolute');
+            bugs.forEach(b => b.remove());
+
+            // 게임 종료 효과음
+            playSynthSound(392.00, "square", 0.2); // G4
+            setTimeout(() => playSynthSound(261.63, "sine", 0.3), 150); // C4
+
+            // 하이스코어 갱신 검증
+            if (gameScore > bestRecord) {
+                bestRecord = gameScore;
+                localStorage.setItem('bug_high_score', bestRecord);
+                document.getElementById('game-high-val').textContent = bestRecord;
+            }
+
+            // 오버레이 결과 출력 화면으로 복구
+            const overlay = document.getElementById('game-overlay');
+            const isEnglish = currentLang === 'en';
+            overlay.innerHTML = `
+                <div class="text-center space-y-2">
+                    <span class="text-brand-terminalYellow font-bold block font-mono text-base">${isEnglish ? 'Mission Completed!' : '미션 완료!'}</span>
+                    <p class="text-xs text-stone-400 font-mono">${isEnglish ? 'Squashed Bugs' : '처치한 버그'} : <span class="text-brand-accent font-bold">${gameScore}</span></p>
+                    <button onclick="resetGameScreen()" class="mt-2 px-5 py-2.5 bg-brand-accent text-brand-cream rounded-full hover:bg-brand-accentLight transition-all font-bold font-mono text-xs">
+                        REPLAY MISSION
+                    </button>
+                </div>
+            `;
+            overlay.classList.remove('hidden');
+        }
+
+        function resetGameScreen() {
+            const overlay = document.getElementById('game-overlay');
+            const isEnglish = currentLang === 'en';
+            overlay.innerHTML = `
+                <span class="text-lg font-mono font-bold text-brand-cream">${isEnglish ? 'Ready to initiate the bug-squashing pipeline?' : '스쿼시 작전을 개시할 준비가 되었나요?'}</span>
+                <button onclick="startGame()" class="px-5 py-2.5 bg-brand-accent text-brand-cream rounded-full hover:bg-brand-accentLight transition-all font-bold font-mono text-sm shadow-lg">
+                    START MISSION
+                </button>
+            `;
+            startGame();
+        }
+
+        // ============================================
+        // ============================================
+        // 🚀 이스터에그 찾기 시스템 (Achivement Tracker)
+        let collectedEggs = new Set();
+
+        function revealEasterEgg(id) {
+            if (collectedEggs.has(id)) return;
+            collectedEggs.add(id);
+
+            // 해당 이스터에그 시각 비활성화
+            const btn = document.getElementById(`easter-${id}`);
+            if (btn) {
+                btn.classList.remove('text-stone-600', 'text-stone-700', 'egg-active');
+                btn.classList.add('text-brand-terminalGreen');
+                btn.title = "Easter Egg Collected!";
+            }
+
+            // 오디오 축하 연출
+            playSynthSound(523.25, "sine", 0.08); // C5
+            setTimeout(() => playSynthSound(659.25, "sine", 0.08), 100); // E5
+            setTimeout(() => playSynthSound(783.99, "sine", 0.08), 200); // G5
+            setTimeout(() => playSynthSound(1046.50, "sine", 0.2), 300); // C6
+
+            // 카운터 갱신
+            document.getElementById('easter-counter').textContent = `${collectedEggs.size}/3`;
+
+            // 3개 올클리어 특수 보상
+            if (collectedEggs.size === 3) {
+                setTimeout(() => {
+                    alert(currentLang === 'en' ? 
+                        "🎉 Excellent! You have found all 3 easter eggs hidden inside Donghee's JSON file!" : 
+                        "🎉 대단합니다! 동희의 포트폴리오에 숨겨진 3개의 이스터에그를 모두 수집하셨습니다! 당신은 뛰어난 화이트 해커입니다."
+                    );
+                }, 500);
+            }
+        }
+
+        // ============================================
+        // 🚀 초기 구동 진입 핸들러
+        // ============================================
         window.onload = function() {
+            // 언어 환경 설정 복구
+            const savedLang = localStorage.getItem('lang') || 'ko';
+            setLanguage(savedLang);
+
+            // 방명록 렌더링
+            loadGuestbook();
+
+            // 탭 라우터 가동
             handleTabRouting();
         };
     </script>
