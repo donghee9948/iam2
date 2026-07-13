@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KimDongHee.json | 백엔드 엔지니어 포트폴리오</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#111113',          // 정갈하고 따뜻한 미니멀 차콜 (메인 배경)
+                            panel: '#19191d',       // 차분한 다크 브라운-슬레이트 (카드 배경)
+                            panelLight: '#242429',  // 조금 더 밝은 톤 (호버 및 강조 레이어)
+                            accent: '#e07a5f',      // 편안하고 고급스러운 가을 벽돌색 (메인 포인트)
+                            accentLight: '#f2a18a', // 화사한 테라코타 라이트
+                            secondary: '#f4f1de',   // 일러스트 바탕이 되는 자연스러운 샌드 베이지
+                            cream: '#fbf8f3',       // 소프트 크림 화이트 (텍스트 기본/강조)
+                            terminalGreen: '#8ac926', 
+                            terminalYellow: '#ffca3a',
+                            terminalRed: '#ff595e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111113;
+            color: #fbf8f3;
+        }
+        /* Custom typing cursor blink */
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        /* Smooth tab contents fading and scaling transitions */
+        .tab-content {
+            transition: opacity 250ms ease-out, transform 250ms ease-out;
+        }
+        /* Sleek custom scrollbar integrated with our cozy warm colors */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111113;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #242429;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e07a5f;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen overflow-x-hidden text-stone-200">
+
+    <!-- 네비게이션 바 (고정형) -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-brand-bg/90 backdrop-blur-md border-b border-brand-panel/80 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- 로고 -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="font-mono text-lg font-bold text-brand-accentLight tracking-tight flex items-center gap-2">
+                        <span class="text-brand-accent">&lt;</span>
+                        <span class="text-brand-cream hover:text-brand-accentLight transition-colors">KimDongHee.json</span>
+                        <span class="text-brand-accent">/&gt;</span>
+                    </a>
+                </div>
+                <!-- 데스크탑 메뉴 (클릭 시 하단 스크롤이 아닌 해시 기반 탭 전환) -->
+                <div class="hidden md:flex items-center space-x-2 font-mono text-sm">
+                    <a href="#home" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Home</a>
+                    <a href="#about" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">About</a>
+                    <a href="#charms" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Charms</a>
+                    <a href="#hobbies" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Off-duty</a>
+                    <a href="#tech" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Tech</a>
+                    <a href="#collaboration" class="nav-link px-3 py-1.5 rounded-lg text-stone-300 hover:text-brand-accentLight transition-all">Collaboration</a>
+                    <a href="#contact" class="nav-link px-4 py-1.5 bg-brand-accent/20 hover:bg-brand-accent/30 text-brand-cream border border-brand-accent/40 rounded-lg transition-all">Contact</a>
+                </div>
+                <!-- 모바일 토글 버튼 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-stone-400 hover:text-brand-cream focus:outline-none" aria-label="메뉴 열기">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 모바일 드롭다운 메뉴 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-panel/95 border-b border-brand-accent/20 px-4 pt-2 pb-4 space-y-1 font-mono text-center">
+            <a href="#home" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Home</a>
+            <a href="#about" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">About</a>
+            <a href="#charms" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Charms</a>
+            <a href="#hobbies" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Off-duty</a>
+            <a href="#tech" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Tech</a>
+            <a href="#collaboration" class="nav-link block py-2 text-stone-300 hover:text-brand-accentLight rounded-md transition-colors">Collaboration</a>
+            <a href="#contact" class="nav-link block py-2 text-brand-cream bg-brand-accent/20 border border-brand-accent/30 rounded-lg">Contact</a>
+        </div>
+    </nav>
+
+    <!-- 메인 컨텐츠 영역 (탭 전용 래퍼) -->
+    <main class="flex-grow pt-16 flex flex-col">
+
+        <!-- 1. [Home] 히어로 탭 -->
+        <div id="tab-home" class="tab-content w-full flex-grow flex items-center justify-center py-12 px-4 relative overflow-hidden bg-gradient-to-b from-brand-bg to-brand-panel">
+            <!-- 배경 오렌지/테라코타 엠비언트 라이트 효과 -->
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent/10 rounded-full filter blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-secondary/5 rounded-full filter blur-[120px] pointer-events-none"></div>
+
+            <div class="max-w-6xl w-full z-10 my-auto">
+                <!-- 터미널 윈도우 -->
+                <div class="w-full bg-brand-panel/95 rounded-2xl border border-brand-accent/25 shadow-[0_0_40px_rgba(224,122,95,0.08)] overflow-hidden backdrop-blur-md">
+                    <!-- 터미널 타이틀바 -->
+                    <div class="flex items-center justify-between px-4 py-3 bg-brand-bg/95 border-b border-brand-panel">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-brand-terminalRed inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-brand-terminalYellow inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-brand-terminalGreen inline-block"></span>
+                        </div>
+                        <span class="font-mono text-xs text-stone-400">kim-dong-hee ~ zsh ~ profile.json</span>
+                        <span class="w-10"></span>
+                    </div>
+                    
+                    <!-- 터미널 본문 -->
+                    <div class="p-6 sm:p-8 md:p-10 font-mono text-stone-300">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            
+                            <!-- 좌측: JSON 데이터 및 실시간 타이핑 -->
+                            <div class="lg:col-span-7 space-y-6">
+                                <div>
+                                    <span class="text-brand-accent">guest@ssafy-gumi-4:~$</span>
+                                    <span class="text-brand-cream ml-2">cat profile.json</span>
+                                </div>
+
+                                <!-- JSON 시각화 -->
+                                <div class="text-sm sm:text-base text-stone-400 pl-4 border-l-2 border-brand-accent/40 space-y-1">
+                                    <div>{</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">name</span>": "<span class="text-brand-cream">김동희</span>",</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">age</span>": <span class="text-amber-400">27</span>,</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">location</span>": "<span class="text-brand-cream">SSAFY 구미 캠퍼스 (4반)</span>",</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">role</span>": "<span class="text-brand-secondary">AI Backend Engineer Candidate</span>",</div>
+                                    <div class="pl-4">"<span class="text-brand-accentLight">mbti</span>": "<span class="text-brand-accent">INTJ</span>"</div>
+                                    <div>}</div>
+                                </div>
+
+                                <!-- 실시간 타이핑 영역 -->
+                                <div class="space-y-2 pt-4">
+                                    <div class="flex items-start text-brand-accent text-lg sm:text-xl font-bold min-h-[3rem]">
+                                        <span class="mr-2">&gt;</span>
+                                        <span id="typed-text" class="text-brand-cream"></span>
+                                        <span class="cursor-blink ml-1 bg-brand-accentLight w-2.5 h-6 inline-block"></span>
+                                    </div>
+                                </div>
+
+                                <!-- 타겟 오디언스 라벨 -->
+                                <div class="pt-6 border-t border-brand-panel/80 flex flex-wrap gap-2 items-center text-xs text-stone-400">
+                                    <span class="text-stone-500">Target Audience:</span>
+                                    <span class="bg-brand-accent/10 px-2 py-1 rounded border border-brand-accent/20 text-brand-accentLight">#SSAFY_프로젝트_동기</span>
+                                    <span class="bg-brand-secondary/5 px-2 py-1 rounded border border-brand-secondary/20 text-brand-secondary">#Java_알고리즘_스터디_동기</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 다음 단계 가이드 CTA -->
+                <div class="text-center mt-12">
+                    <a href="#about" class="inline-flex items-center gap-2 bg-brand-panel px-6 py-3 rounded-full border border-brand-accent/30 hover:border-brand-accent text-sm font-mono text-brand-accentLight hover:text-brand-cream transition-all shadow-md">
+                        <span>상세 소개 보기 (About)</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. [About] 소개 탭 -->
+        <div id="tab-about" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
+            <div class="max-w-4xl w-full my-auto">
+                <div class="flex items-center gap-3 mb-10">
+                    <div class="h-1 w-12 bg-brand-accent rounded"></div>
+                    <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight">About Me : 김동희</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+                    <!-- 프로필 메타 카드 -->
+                    <div class="md:col-span-5 bg-brand-panel/60 border border-brand-accent/15 rounded-2xl p-6 flex flex-col justify-between hover:border-brand-accent/30 transition-all shadow-lg">
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-accent to-brand-accentLight flex items-center justify-center text-2xl text-brand-cream font-mono shadow-md">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-brand-cream">김동희</h3>
+                                    <p class="text-sm text-brand-accentLight font-mono">AI Backend Developer</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 font-mono text-sm border-t border-b border-brand-accent/10 py-4 text-stone-300">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-stone-500"><i class="fa-solid fa-cake-candles mr-2"></i>Age</span>
+                                    <span class="text-brand-cream">27세</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-stone-500"><i class="fa-solid fa-graduation-cap mr-2"></i>Location</span>
+                                    <span class="text-brand-cream">SSAFY 구미 4반</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-stone-500"><i class="fa-solid fa-brain mr-2"></i>MBTI</span>
+                                    <span class="text-brand-accentLight font-bold">INTJ (용의주도 전략가)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 태그 클라우드 -->
+                        <div class="mt-6 space-y-2">
+                            <span class="text-xs text-stone-500 block font-mono">My Identity Tags:</span>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="bg-brand-bg text-brand-cream px-3 py-1.5 rounded-full border border-brand-accent/20 hover:border-brand-accent transition-all cursor-default shadow-sm">#커피러버 ☕</span>
+                                <span class="bg-brand-bg text-brand-cream px-3 py-1.5 rounded-full border border-brand-accent/20 hover:border-brand-accent transition-all cursor-default shadow-sm">#코딩공부필요 💻</span>
+                                <span class="bg-brand-bg text-brand-cream px-3 py-1.5 rounded-full border border-brand-accent/20 hover:border-brand-accent transition-all cursor-default shadow-sm">#AI_백엔드_희망 🤖</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 인사말 메시지 -->
+                    <div class="md:col-span-7 bg-brand-panel/60 border border-brand-accent/10 rounded-2xl p-6 sm:p-8 flex flex-col justify-center hover:border-brand-accent/20 transition-all relative shadow-lg">
+                        <div class="absolute top-4 right-6 text-brand-accent/10 text-6xl font-serif select-none pointer-events-none">“</div>
+                        <div class="space-y-6 text-stone-300">
+                            <p class="text-lg leading-relaxed font-light">
+                                "이번 1학기 동안 <span class="text-brand-accentLight font-semibold">서로 자극을 주며 함께 성장하실 분들</span>을 찾고 있습니다."
+                            </p>
+                            <p class="leading-relaxed">
+                                에러 앞에서 밤새는 것을 두려워하지 않는 집요함으로 든든한 백엔드를 책임지겠습니다! 
+                                기능이 정상적으로 작동하는 것은 당연하며, 효율적인 아키텍처와 최적화된 데이터 흐름을 통해 실제 유저에게 완성도 높은 가치를 안전하게 서비스하는 것을 최종 지향점으로 삼고 있습니다.
+                            </p>
+                            <div class="pt-4 border-t border-brand-panel/80 flex items-center gap-4 text-xs font-mono text-stone-400">
+                                <div>
+                                    <span class="text-brand-accent font-bold">100%</span>
+                                    <span class="block text-[10px] text-stone-500">책임 완수율</span>
+                                </div>
+                                <div class="w-px h-6 bg-brand-panel"></div>
+                                <div>
+                                    <span class="text-brand-accentLight font-bold">INTJ</span>
+                                    <span class="block text-[10px] text-stone-500">전략적 계획가</span>
+                                </div>
+                                <div class="w-px h-6 bg-brand-panel"></div>
+                                <div>
+                                    <span class="text-brand-secondary font-bold">Deep Dive</span>
+                                    <span class="block text-[10px] text-stone-500">자기주도 학습</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. [Charms] 핵심 매력 탭 -->
+        <div id="tab-charms" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
+            <div class="max-w-5xl w-full my-auto">
+                <div class="text-center mb-12 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-panel border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
+                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span> Core Values
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight">협업에 기여할 세 가지 무기</h2>
+                    <p class="text-sm sm:text-base text-stone-400 max-w-2xl mx-auto">개발팀을 단단하고 견고하게 만드는 백엔드 개발자로서의 핵심 역량을 소개합니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 카드 1: 집요함 -->
+                    <div class="bg-gradient-to-b from-brand-panel to-brand-bg border border-brand-accent/10 rounded-2xl p-6 hover:-translate-y-1.5 hover:border-brand-accent/40 hover:shadow-[0_0_25px_rgba(224,122,95,0.06)] transition-all duration-300 flex flex-col justify-between group shadow-lg">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-shield-halved text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
+                                끝까지 책임지는 집요함 <br>
+                                <span class="text-xs text-stone-400 font-mono block mt-1">Responsibility</span>
+                            </h3>
+                            <p class="text-sm text-stone-400 leading-relaxed">
+                                내가 담당한 기능과 코드에 대해서는 타협 없이 집요하게 파고듭니다. 많은 시간을 소모하고 밤을 새우더라도 완벽하게 원인을 추적해 내는 성실한 근성과 책임감을 탑재하고 있습니다.
+                            </p>
+                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accent flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+                            <span>디버깅 성취율 100% 목표</span>
+                        </div>
+                    </div>
+
+                    <!-- 카드 2: 유저 중심 -->
+                    <div class="bg-gradient-to-b from-brand-panel to-brand-bg border border-brand-accent/10 rounded-2xl p-6 hover:-translate-y-1.5 hover:border-brand-accent/40 hover:shadow-[0_0_25px_rgba(224,122,95,0.06)] transition-all duration-300 flex flex-col justify-between group shadow-lg">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-secondary group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-users text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-secondary transition-colors">
+                                유저를 향하는 백엔드 <br>
+                                <span class="text-xs text-stone-400 font-mono block mt-1">User-Centric</span>
+                            </h3>
+                            <p class="text-sm text-stone-400 leading-relaxed">
+                                단순한 API 서버 구축이나 DB 설계를 넘어, '어떻게 최적화해야 더 많은 사용자가 속도감 있게 AI 서비스를 경험할 수 있을까?'를 매 순간 유저 관점에서 철저히 연구합니다.
+                            </p>
+                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-secondary flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-secondary"></span>
+                            <span>사용자 경험 지향 아키텍처</span>
+                        </div>
+                    </div>
+
+                    <!-- 카드 3: 사려깊은 소통 -->
+                    <div class="bg-gradient-to-b from-brand-panel to-brand-bg border border-brand-accent/10 rounded-2xl p-6 hover:-translate-y-1.5 hover:border-brand-accent/40 hover:shadow-[0_0_25px_rgba(224,122,95,0.06)] transition-all duration-300 flex flex-col justify-between group shadow-lg">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accentLight group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-comments text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
+                                생각이 담긴 준비된 소통 <br>
+                                <span class="text-xs text-stone-400 font-mono block mt-1">Thoughtful Comm.</span>
+                            </h3>
+                            <p class="text-sm text-stone-400 leading-relaxed">
+                                이슈가 생기면 일방적인 질문 대신 해결책을 직접 먼저 고민하고 가설을 세워 부딪쳐 봅니다. 이후 정돈된 근거와 데이터를 들고 팀원들과 가장 효율적인 고밀도 소통을 지향합니다.
+                            </p>
+                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-accentLight"></span>
+                            <span>준비된 가설 기반 소통법</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. [Hobbies] 일상/취미 탭 -->
+        <div id="tab-hobbies" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
+            <div class="max-w-5xl w-full my-auto">
+                <div class="space-y-3 mb-12">
+                    <div class="flex items-center gap-3">
+                        <div class="h-1 w-12 bg-brand-accent rounded"></div>
+                        <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight">Off duty : 개발 밖의 일상</h2>
+                    </div>
+                    <p class="text-sm text-stone-400 font-mono">코딩 밖에서 채워지는 에너지, 그것이 개발의 끈기로 이어집니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- 취미 1: 검도 -->
+                    <div class="bg-brand-panel/40 border border-brand-accent/10 rounded-2xl p-6 hover:bg-brand-panel/60 hover:border-brand-accent/30 transition-all flex flex-col justify-between group shadow-lg">
+                        <div class="space-y-4 text-stone-300">
+                            <div class="text-3xl group-hover:scale-110 transition-transform duration-300 w-fit">⚔️</div>
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">검도 (Kumdo)</h3>
+                            <p class="text-sm text-stone-400 leading-relaxed">
+                                매 호흡마다 흐트러짐 없는 자세를 유지해야 하는 검도. 여기서 다져진 깊은 <span class="text-brand-secondary font-medium">끈기</span>와 <span class="text-brand-secondary font-medium">매서운 집중력</span>을 바탕으로, 코드 상에서 까다로운 버그를 만났을 때도 타협 없이 끝까지 파고들어 마침내 깔끔하게 단칼에 베어냅니다.
+                            </p>
+                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight">
+                            #집중력 #끈기단련
+                        </div>
+                    </div>
+
+                    <!-- 취미 2: FPS 게임 -->
+                    <div class="bg-brand-panel/40 border border-brand-accent/10 rounded-2xl p-6 hover:bg-brand-panel/60 hover:border-brand-accent/30 transition-all flex flex-col justify-between group shadow-lg">
+                        <div class="space-y-4 text-stone-300">
+                            <div class="text-3xl group-hover:scale-110 transition-transform duration-300 w-fit">🎮</div>
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">FPS Game</h3>
+                            <p class="text-sm text-stone-400 leading-relaxed">
+                                발로란트, 배틀그라운드, 서든어택 등에서 가장 흥미를 갖는 부분은 미니맵을 보며 팀원들과 전장의 상황을 빈틈없이 브리핑하고 전략적인 수를 맞추는 것입니다. 이 협동력은 고스란히 개발 프로젝트로 이어져, 뒤에서 든든히 밀어주는 <span class="text-brand-secondary font-medium">서포트형 팀원</span>으로서의 역할을 보장합니다.
+                            </p>
+                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight">
+                            #전략적브리핑 #든든한백업
+                        </div>
+                    </div>
+
+                    <!-- 취미 3: 영화 감상 -->
+                    <div class="bg-brand-panel/40 border border-brand-accent/10 rounded-2xl p-6 hover:bg-brand-panel/60 hover:border-brand-accent/30 transition-all flex flex-col justify-between group shadow-lg">
+                        <div class="space-y-4 text-stone-300">
+                            <div class="text-3xl group-hover:scale-110 transition-transform duration-300 w-fit">🎬</div>
+                            <h3 class="text-lg font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">영화 감상</h3>
+                            <p class="text-sm text-stone-400 leading-relaxed">
+                                등장인물의 사소한 대사, 배경의 장치 하나가 결말에 거대한 흐름을 만들어내는 잘 설계된 웰메이드 복선 영화를 선호합니다. 이처럼 세심하게 복선 구조를 살피는 통찰력을 기반으로, 데이터 파이프라인과 트랜잭션 하나도 <span class="text-brand-secondary font-medium">빈틈없고 탄탄하게 구조적으로 설계</span>하려 애씁니다.
+                            </p>
+                        </div>
+                        <div class="pt-6 font-mono text-xs text-brand-accentLight">
+                            #치밀한구조화 #복선추적
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. [Tech] 기술 스택 탭 -->
+        <div id="tab-tech" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
+            <div class="max-w-5xl w-full my-auto">
+                <div class="text-center mb-12 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-panel border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
+                        <span class="w-2 h-2 rounded-full bg-brand-accent"></span> My Weapons
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight">Tech Stack : 나의 무기와 성장의 궤적</h2>
+                    <p class="text-sm sm:text-base text-stone-400 max-w-2xl mx-auto font-light">
+                        이미 완벽히 구사하는 기술을 너머, <span class="text-brand-accentLight font-semibold">현재 싸피(SSAFY)에서 가장 뜨겁게 파고들며</span> 빠르게 흡수하고 발전시키는 무기들입니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Core Languages -->
+                    <div class="bg-brand-panel/50 border border-brand-accent/10 rounded-2xl p-6 hover:border-brand-accent/30 transition-all flex flex-col justify-between shadow-lg">
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-3">
+                                <span class="p-2 bg-brand-accent/10 border border-brand-accent/20 text-brand-accentLight rounded-lg">
+                                    <i class="fa-solid fa-code text-lg"></i>
+                                </span>
+                                <h3 class="text-lg font-bold text-brand-cream font-mono">Core Languages</h3>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between text-xs font-mono">
+                                        <span class="text-stone-200 font-semibold">Java</span>
+                                        <span class="text-brand-accentLight">Deep Diving</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[85%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between text-xs font-mono">
+                                        <span class="text-stone-200 font-semibold">Python</span>
+                                        <span class="text-brand-accentLight">AI Integration</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[80%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between text-xs font-mono">
+                                        <span class="text-stone-200 font-semibold">Dart</span>
+                                        <span class="text-stone-400">Mobile Build</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[65%] rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-xs text-stone-500 font-mono italic">
+                            * 알고리즘 문제 해결 및 핵심 서버 개발의 기반 언어
+                        </div>
+                    </div>
+
+                    <!-- Frameworks & Ecosystem -->
+                    <div class="bg-brand-panel/50 border border-brand-accent/10 rounded-2xl p-6 hover:border-brand-accent/30 transition-all flex flex-col justify-between relative overflow-hidden shadow-lg">
+                        <div class="absolute top-4 right-4 bg-brand-accent/10 border border-brand-accent/30 text-brand-accent text-[10px] px-2 py-0.5 rounded font-mono flex items-center gap-1">
+                            <span class="relative flex h-1.5 w-1.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand-accent"></span>
+                            </span>
+                            <span>🏊 DEEP DIVING</span>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-3">
+                                <span class="p-2 bg-brand-accent/10 border border-brand-accent/20 text-brand-accentLight rounded-lg">
+                                    <i class="fa-solid fa-cubes text-lg"></i>
+                                </span>
+                                <h3 class="text-lg font-bold text-brand-cream font-mono">Frameworks & Eco</h3>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs font-mono">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-stone-200 font-semibold">Spring Boot</span>
+                                            <span class="bg-brand-accent/10 border border-brand-accent/20 text-brand-accentLight text-[9px] px-1 rounded">공부 중</span>
+                                        </div>
+                                        <span class="text-brand-accent">🔥 SSAFY Focused</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[75%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs font-mono">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-stone-200 font-semibold">FastAPI</span>
+                                            <span class="bg-brand-accent/10 border border-brand-accent/20 text-brand-accentLight text-[9px] px-1 rounded">공부 중</span>
+                                        </div>
+                                        <span class="text-brand-accentLight">AI Serving</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[70%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs font-mono">
+                                        <span class="text-stone-200 font-semibold">Flutter</span>
+                                        <span class="text-stone-400">Cross-Platform</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[60%] rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-xs text-stone-500 font-mono italic">
+                            * 백엔드의 표준 아키텍처 및 초고속 API 서빙을 위한 주력 프레임워크 공부 중
+                        </div>
+                    </div>
+
+                    <!-- Data & Tools -->
+                    <div class="bg-brand-panel/50 border border-brand-accent/10 rounded-2xl p-6 hover:border-brand-accent/30 transition-all flex flex-col justify-between shadow-lg">
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-3">
+                                <span class="p-2 bg-brand-accent/10 border border-brand-accent/20 text-brand-accentLight rounded-lg">
+                                    <i class="fa-solid fa-database text-lg"></i>
+                                </span>
+                                <h3 class="text-lg font-bold text-brand-cream font-mono">Data & Tools</h3>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between text-xs font-mono">
+                                        <span class="text-stone-200 font-semibold">MySQL</span>
+                                        <span class="text-stone-300">RDB 설계 가능</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[75%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between text-xs font-mono">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-stone-200 font-semibold">Redis</span>
+                                            <span class="bg-brand-accent/10 border border-brand-accent/20 text-brand-accentLight text-[9px] px-1 rounded">공부 중</span>
+                                        </div>
+                                        <span class="text-brand-accent">Cache Strategy</span>
+                                    </div>
+                                    <div class="w-full bg-brand-panel h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-accent to-brand-accentLight h-full w-[50%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <span class="text-xs font-mono text-stone-400 block">Collaboration Tools</span>
+                                    <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                                        <span class="bg-brand-panel text-stone-300 px-2 py-1 rounded">Git/Github</span>
+                                        <span class="bg-brand-panel text-stone-300 px-2 py-1 rounded">Notion</span>
+                                        <span class="bg-brand-panel text-stone-300 px-2 py-1 rounded">Figma</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-xs text-stone-500 font-mono italic">
+                            * 피그마를 활용해 화면을 해석하여 백엔드 모델과의 싱크를 완벽히 매핑합니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. [Collaboration] 협업 스타일 탭 -->
+        <div id="tab-collaboration" class="tab-content w-full flex-grow flex items-center justify-center py-16 px-4 hidden">
+            <div class="max-w-5xl w-full my-auto">
+                <div class="flex items-center gap-3 mb-12">
+                    <div class="h-1 w-12 bg-brand-accent rounded"></div>
+                    <h2 class="text-2xl sm:text-3xl font-bold font-mono text-brand-cream tracking-tight">Collaboration : 나와 함께한다는 것</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- 기획부터 함께하는 올라운더 -->
+                    <div class="bg-brand-panel/30 hover:bg-brand-panel/50 border border-brand-accent/10 hover:border-brand-accent/30 p-6 sm:p-8 rounded-2xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 group shadow-lg">
+                        <div class="space-y-3 max-w-2xl text-stone-300">
+                            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-accent/10 border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
+                                <span>01 / ALL-ROUNDER</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
+                                기획부터 함께하는 올라운더 <span class="text-stone-400 font-light text-base">(Figma to Code)</span>
+                            </h3>
+                            <p class="text-stone-400 text-sm leading-relaxed">
+                                피그마(Figma)를 직접 능숙하게 만지며 조율할 수 있습니다. 프론트엔드의 화면 단을 깊숙하게 미리 이해하고 있어, 초기 기획 단계에서 발생할 수 있는 소통 불일치를 대폭 줄이고 백엔드 데이터 모델링 싱크를 완벽히 극대화합니다.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 self-start md:self-center font-mono text-xs text-stone-500">
+                            <i class="fa-solid fa-compass-drafting text-brand-accent text-xl"></i>
+                            <span>협업 밀도 최상</span>
+                        </div>
+                    </div>
+
+                    <!-- 빈틈없는 데이터의 수호자 -->
+                    <div class="bg-brand-panel/30 hover:bg-brand-panel/50 border border-brand-accent/10 hover:border-brand-accent/30 p-6 sm:p-8 rounded-2xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 group shadow-lg">
+                        <div class="space-y-3 max-w-2xl text-stone-300">
+                            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-accent/10 border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
+                                <span>02 / ROBUST BACKEND</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
+                                빈틈없는 데이터의 수호자 <span class="text-stone-400 font-light text-base">(Robust Backend)</span>
+                            </h3>
+                            <p class="text-stone-400 text-sm leading-relaxed">
+                                나에게 할당된 서버 기능에서 에러가 터지는 꼴을 그냥 보고 넘기지 않습니다. 강력한 책임감으로 에러의 흔적을 끝까지 추적해 박멸하고, 대량의 호출과 특이 케이스에도 끄떡없이 든든하게 동작할 백엔드 인프라를 구축하는 데 집중합니다.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 self-start md:self-center font-mono text-xs text-stone-500">
+                            <i class="fa-solid fa-server text-brand-accent text-xl"></i>
+                            <span>무중단 지향 에러 박멸</span>
+                        </div>
+                    </div>
+
+                    <!-- 근거 있는 준비된 소통 -->
+                    <div class="bg-brand-panel/30 hover:bg-brand-panel/50 border border-brand-accent/10 hover:border-brand-accent/30 p-6 sm:p-8 rounded-2xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 group shadow-lg">
+                        <div class="space-y-3 max-w-2xl text-stone-300">
+                            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-accent/10 border border-brand-accent/20 text-xs font-mono text-brand-accentLight">
+                                <span>03 / THOUGHTFUL FEEDBACK</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-cream group-hover:text-brand-accentLight transition-colors">
+                                근거 있는 준비된 소통 <span class="text-stone-400 font-light text-base">(Thoughtful Feedback)</span>
+                            </h3>
+                            <p class="text-stone-400 text-sm leading-relaxed">
+                                팀에 무리한 부담을 지우는 모호한 질문 대신, 면밀한 자가 분석과 디버깅 결과를 우선 거친 후 이야기합니다. 정리된 여러 대안과 장단점 비교 데이터를 바탕으로 팀원들과 밀도 높고 결론이 신속한 정답형 대화를 지향합니다.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 self-start md:self-center font-mono text-xs text-stone-500">
+                            <i class="fa-solid fa-brain text-brand-accent text-xl"></i>
+                            <span>고효율 스마트 피드백</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. [Contact] 컨택트 전용 탭 -->
+        <div id="tab-contact" class="tab-content w-full flex-grow flex flex-col items-center justify-center py-16 px-4 hidden">
+            <div class="max-w-4xl w-full my-auto space-y-12">
+                
+                <!-- CTA 성격의 매칭 메시지 -->
+                <div class="text-center space-y-6 max-w-2xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-cream tracking-tight leading-tight">
+                        준비된 팀원 동희와 함께 <br>
+                        성공적인 프로젝트 빌딩을 해보실래요?
+                    </h2>
+                    <p class="text-stone-300 text-sm sm:text-base font-light">
+                        에러 앞에서 망설임 없이 밤을 새우며, AI를 활용해 서비스의 깊이를 더해줄 백엔드 파트너를 찾고 계시다면 지금 바로 문의하세요.
+                    </p>
+                </div>
+
+                <!-- 연락 방식 카드 (이메일 & 깃허브) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto text-center font-mono">
+                    <!-- 이메일 카드 -->
+                    <div class="bg-brand-panel/50 border border-brand-accent/10 p-6 rounded-2xl hover:border-brand-accent/30 transition-all flex flex-col items-center gap-3 shadow-lg">
+                        <span class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-accent">
+                            <i class="fa-solid fa-envelope text-lg"></i>
+                        </span>
+                        <span class="text-xs text-stone-500">Email Contact</span>
+                        <!-- 복사 기능 -->
+                        <button onclick="copyToClipboard('hongricky73@naver.com')" class="text-brand-cream hover:text-brand-accentLight font-semibold text-sm transition-colors cursor-pointer group flex items-center gap-1.5 focus:outline-none">
+                            hongricky73@naver.com
+                            <i class="fa-regular fa-copy text-xs text-stone-500 group-hover:text-brand-accentLight transition-colors"></i>
+                        </button>
+                        <!-- 복사 성공 토스트 피드백 -->
+                        <span id="copy-feedback" class="text-[10px] text-brand-terminalGreen opacity-0 transition-opacity">클립보드에 이메일이 복사되었습니다!</span>
+                    </div>
+
+                    <!-- 깃허브 카드 -->
+                    <a href="https://github.com/donghee9948" target="_blank" rel="noopener noreferrer" class="bg-brand-panel/50 border border-brand-accent/10 p-6 rounded-2xl hover:border-brand-accent/30 transition-all flex flex-col items-center gap-3 group shadow-lg">
+                        <span class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-github text-xl"></i>
+                        </span>
+                        <span class="text-xs text-stone-500">Github Address</span>
+                        <span class="text-brand-cream group-hover:text-brand-accentLight font-semibold text-sm transition-colors">
+                            github.com/donghee9948
+                        </span>
+                    </a>
+                </div>
+
+                <!-- 싸피 동희 응원 문구 -->
+                <div class="text-center text-xs font-mono text-stone-500 space-y-1">
+                    <p class="text-stone-400 font-semibold">SSAFY 구미 캠퍼스 4반 김동희</p>
+                    <p>Designed with ❤️ for Developer synergy</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 글로벌 최소화 푸터 (각 화면 맨 밑에 심플하게 표시) -->
+    <footer class="bg-brand-bg border-t border-brand-panel/40 py-6 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-stone-500 text-center sm:text-left">
+            <div>
+                <p>&copy; 2026 Kim Dong Hee. All rights reserved.</p>
+            </div>
+            <div class="flex gap-4">
+                <a href="#home" class="hover:text-brand-accent transition-colors">Home</a>
+                <a href="#about" class="hover:text-brand-accent transition-colors">About</a>
+                <a href="#contact" class="hover:text-brand-accent transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 자바스크립트 라우팅 및 애니메이션 소스코드 -->
+    <script>
+        // 1. 탭 리스트 매핑
+        const tabs = {
+            '#home': document.getElementById('tab-home'),
+            '#about': document.getElementById('tab-about'),
+            '#charms': document.getElementById('tab-charms'),
+            '#hobbies': document.getElementById('tab-hobbies'),
+            '#tech': document.getElementById('tab-tech'),
+            '#collaboration': document.getElementById('tab-collaboration'),
+            '#contact': document.getElementById('tab-contact')
+        };
+
+        // 2. 타이핑 애니메이션 변수 및 함수
+        const typedTextSpan = document.getElementById("typed-text");
+        const phrase = "데이터의 흐름에 AI의 효율을 더하는 백엔드 엔지니어";
+        let charIndex = 0;
+        let typingTimeout;
+
+        function type() {
+            if (charIndex < phrase.length) {
+                typedTextSpan.textContent += phrase.charAt(charIndex);
+                charIndex++;
+                typingTimeout = setTimeout(type, 100);
+            }
+        }
+
+        function resetAndStartTyping() {
+            clearTimeout(typingTimeout);
+            typedTextSpan.textContent = "";
+            charIndex = 0;
+            // 살짝 여백을 주고 시작
+            setTimeout(type, 300);
+        }
+
+        // 3. 해시 변경 감지 및 탭 전환 라우터 (SPA 핵심 구조)
+        function handleTabRouting() {
+            // 주소창 해시 획득 (없으면 #home 기본값)
+            let hash = window.location.hash || '#home';
+            
+            // 등록된 탭이 아닌 엉뚱한 해시 입력 방지 예외 처리
+            if (!tabs[hash]) {
+                hash = '#home';
+            }
+
+            // 모든 탭 페이드 아웃 및 숨기기
+            Object.keys(tabs).forEach(key => {
+                const tabEl = tabs[key];
+                tabEl.classList.add('hidden', 'opacity-0', 'scale-[0.98]');
+                tabEl.classList.remove('opacity-100', 'scale-100');
+            });
+
+            // 해당 활성 탭 나타내기 (약간의 프레임 버퍼 후 애니메이션 작동)
+            const activeTab = tabs[hash];
+            activeTab.classList.remove('hidden');
+            setTimeout(() => {
+                activeTab.classList.remove('opacity-0', 'scale-[0.98]');
+                activeTab.classList.add('opacity-100', 'scale-100');
+            }, 50);
+
+            // 네비게이션 활성 스타일링 동기화
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === hash) {
+                    // 활성화 상태 디자인
+                    link.classList.add('text-brand-accentLight', 'bg-brand-panelLight', 'border-brand-accent/20');
+                    link.classList.remove('text-stone-300');
+                } else {
+                    // 비활성화 상태 디자인
+                    link.classList.remove('text-brand-accentLight', 'bg-brand-panelLight', 'border-brand-accent/20');
+                    if (!link.classList.contains('bg-brand-accent/20')) {
+                        link.classList.add('text-stone-300');
+                    }
+                }
+            });
+
+            // 홈 탭일 경우 타이핑 이펙트 가동
+            if (hash === '#home') {
+                resetAndStartTyping();
+            }
+
+            // 탭 변경 시 스크롤 위치 항상 맨 위로 강제 리셋
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        // 4. 이벤트 바인딩 (해시 변경 시 라우터 재호출)
+        window.addEventListener('hashchange', handleTabRouting);
+
+        // 5. 모바일 토글 메뉴 제어
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 모바일 메뉴 클릭 시 자동 접힘 처리
+        document.querySelectorAll('#mobile-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 6. 이메일 클립보드 간편 복사 및 토스트 피드백 처리
+        function copyToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const feedback = document.getElementById('copy-feedback');
+                feedback.classList.remove('opacity-0');
+                feedback.classList.add('opacity-100');
+                setTimeout(() => {
+                    feedback.classList.remove('opacity-100');
+                    feedback.classList.add('opacity-0');
+                }, 2000);
+            } catch (err) {
+                console.error('클립보드 복사 에러:', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // 7. 첫 페이지 초기 가동 로드 핸들러
+        window.onload = function() {
+            handleTabRouting();
+        };
+    </script>
+</body>
+</html>
